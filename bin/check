@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+bundle exec rake redmine_3cx_plugin:check
