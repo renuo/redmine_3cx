@@ -1,0 +1,48 @@
+name: Test Redmine 5.1
+
+on: push
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Redmine
+        uses: actions/checkout@v4
+        with:
+          repository: redmine/redmine
+          ref: 5.1-stable
+
+      - name: Checkout Plugin
+        uses: actions/checkout@v4
+        with:
+          repository: renuo/redmine_3cx_plugin
+          path: plugins/redmine_3cx_plugin
+
+      - name: Cache gems
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: gems-${{ hashFiles('Gemfile', 'plugins/redmine_3cx_plugin/PluginGemfile.lock') }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1.2"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+
+      - name: Start MySQL
+        run: sudo service mysql start
+
+      - name: Setup Plugin
+        working-directory: plugins/redmine_3cx_plugin
+        run: bin/setup
+        env:
+          GITHUB_ACTIONS: true
+
+      - name: Run tests
+        working-directory: plugins/redmine_3cx_plugin
+        run: bin/check
