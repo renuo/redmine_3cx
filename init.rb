@@ -5,7 +5,7 @@ Redmine::Plugin.register :redmine_3cx_plugin do
   author "Daniel Bengl"
   description "A simple 3CX integration plugin."
   version "0.0.1"
-  url "https://github.com/renuo/redmine-3cx-plugin"
+  url "https://github.com/renuo/redmine_3cx_plugin"
   author_url "http://example.com/about"
   menu :application_menu, :polls, {controller: "polls", action: "index"}, caption: "Polls"
   permission :polls, {polls: [:index, :vote]}, public: true
