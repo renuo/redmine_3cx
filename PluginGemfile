@@ -3,5 +3,6 @@ source 'https://rubygems.org'
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'standardrb'
+  gem 'brakeman'
 end
 

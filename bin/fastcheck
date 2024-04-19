@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
 bundle exec standardrb --fix
+bundle exec brakeman -q -z --no-summary --no-pager
