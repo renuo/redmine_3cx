@@ -1,3 +1,10 @@
 = redmine_3cx_plugin
 
-Description goes here
+== Development Setup
+
+  $ git clone -b 5.1-stable https://github.com/redmine/redmine
+  $ git clone https://github.com/renuo/redmine_3cx_plugin redmine/plugins/redmine_3cx_plugin
+  $ cd redmine/plugins/redmine_3cx_plugin
+
+  $ bin/setup
+  $ bin/run
