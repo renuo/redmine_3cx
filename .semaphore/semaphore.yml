@@ -1,0 +1,38 @@
+version: v1.0
+name: redmine_3cx_plugin
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+blocks:
+  - name: Redmine 5.1 tests
+    execution_time_limit:
+      minutes: 5
+    dependencies: []
+    task:
+      secrets: []
+      env_vars:
+        - name: RAILS_ENV
+          value: test
+        - name: SEMAPHORE_CI
+          value: "true"
+
+      prologue:
+        commands:
+          - sem-version ruby 3.1
+          - git clone -b 5.1-stable git@github.com:redmine/redmine.git
+          - cd redmine
+          - yarn
+          - sem-service start postgres
+          - cd plugins
+          - checkout
+          - cp .semaphore/database.yml ../../config/database.yml
+          - bin/setup
+
+      jobs:
+        - name: linter
+          commands:
+            - bin/fastcheck
+        - name: tests
+          commands:
+            - bin/check
