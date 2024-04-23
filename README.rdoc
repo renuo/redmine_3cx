@@ -1,10 +1,10 @@
-= redmine_3cx_plugin
+= hermes_link
 
 == Development Setup
 
   $ git clone -b 5.1-stable https://github.com/redmine/redmine
-  $ git clone https://github.com/renuo/redmine_3cx_plugin redmine/plugins/redmine_3cx_plugin
-  $ cd redmine/plugins/redmine_3cx_plugin
+  $ git clone https://github.com/renuo/hermes_link redmine/plugins/hermes_link
+  $ cd redmine/plugins/hermes_link
 
   $ bin/setup
   $ bin/run

@@ -8,9 +8,9 @@ cd ../..
 
 # Configure Database
 db=config/database.yml.example
-[[ -v SEMAPHORE_CI ]] && db=plugins/redmine_3cx_plugin/.semaphore/database.yml
+[[ -v SEMAPHORE_CI ]] && db=plugins/hermes_link/.semaphore/database.yml
 cp -n $db config/database.yml
 
 bundle install -j 4
-bundle exec rake db:create db:migrate db:seed redmine_3cx_plugin:seed
+bundle exec rake db:create db:migrate db:seed hermes_link:seed
 bundle exec rake redmine:plugins:migrate
