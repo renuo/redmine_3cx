@@ -57,6 +57,6 @@ blocks:
             - checkout
             - cp .semaphore/database.yml ../../config/database.yml
             - bin/setup
-          matirx:
+          matrix:
             - env_var: REDMINE_VERSION
               values: ["5.1", "5.0", "4.2", "4.1", "4.0"]
