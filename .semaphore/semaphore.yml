@@ -4,171 +4,75 @@ agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu2004
+
+prologue: &prologue
+  - sem-version ruby $RUBY_VERSION -f
+  - cache restore redmine-$REDMINE_VERSION
+  - cd redmine
+  - yarn
+  - sem-service start postgres
+  - cd plugins
+  - checkout
+  - cp .semaphore/database.yml ../../config/database.yml
+  - bin/setup
+
+global_job_config:
+  secrets: []
+  execution_time_limit:
+    minutes: 5
+  env_vars:
+    - name: RAILS_ENV
+      value: test
+    - name: SEMAPHORE_CI
+      value: "true"
+    - name: REDMINE_VERSION
+      value: 5.1
+    - name: RUBY_VERSION
+      value: 2.6.0
+  jobs:
+    - name: caching
+      commands:
+        - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
+        - cache store redmine-$REDMINE_VERSION ./redmine
+    - name: checks
+      commands:
+        - *prologue
+        - bin/check
+
 blocks:
   - name: Redmine 5.1 tests
-    execution_time_limit:
-      minutes: 5
-    dependencies: []
     task:
-      secrets: []
       env_vars:
-        - name: RAILS_ENV
-          value: test
-        - name: SEMAPHORE_CI
-          value: "true"
-
-      prologue:
-        commands:
-          - sem-version ruby 3.1 -f
-          - cache restore redmine-5.1
-          - cd redmine
-          - yarn
-          - sem-service start postgres
-          - cd plugins
-          - checkout
-          - cp .semaphore/database.yml ../../config/database.yml
-          - bin/setup
-
+        - name: RUBY_VERSION
+          value: 3.1.1
       jobs:
-        - name: caching
-          commands:
-            - git clone -b 5.1-stable git@github.com:redmine/redmine.git
-            - cache store redmine-5.1 ./redmine
         - name: linter
           commands:
+            - *prologue
             - bin/fastcheck
-        - name: tests
-          commands:
-            - bin/check
 
   - name: Redmine 5.0 tests
-    execution_time_limit:
-      minutes: 5
-    dependencies: []
     task:
-      secrets: []
       env_vars:
-        - name: RAILS_ENV
-          value: test
-        - name: SEMAPHORE_CI
-          value: "true"
-
-      prologue:
-        commands:
-          - sem-version ruby 3.1 -f
-          - cache restore redmine-5.0
-          - cd redmine
-          - yarn
-          - sem-service start postgres
-          - cd plugins
-          - checkout
-          - cp .semaphore/database.yml ../../config/database.yml
-          - bin/setup
-
-      jobs:
-        - name: caching
-          commands:
-            - git clone -b 5.0-stable git@github.com:redmine/redmine.git
-            - cache store redmine-5.0 ./redmine
-        - name: tests
-          commands:
-            - bin/check
+        - name: REDMINE_VERSION
+          value: 5.0
+        - name: RUBY_VERSION
+          value: 3.1
 
   - name: Redmine 4.2 tests
-    execution_time_limit:
-      minutes: 5
-    dependencies: []
     task:
-      secrets: []
       env_vars:
-        - name: RAILS_ENV
-          value: test
-        - name: SEMAPHORE_CI
-          value: "true"
-
-      prologue:
-        commands:
-          - sem-version ruby 2.6.0 -f
-          - cache restore redmine-4.2
-          - cd redmine
-          - yarn
-          - sem-service start postgres
-          - cd plugins
-          - checkout
-          - cp .semaphore/database.yml ../../config/database.yml
-          - bin/setup
-
-      jobs:
-        - name: caching
-          commands:
-            - git clone -b 4.2-stable git@github.com:redmine/redmine.git
-            - cache store redmine-4.2 ./redmine
-        - name: tests
-          commands:
-            - bin/check
+        - name: REDMINE_VERSION
+          value: 4.2
 
   - name: Redmine 4.1 tests
-    execution_time_limit:
-      minutes: 5
-    dependencies: []
     task:
-      secrets: []
       env_vars:
-        - name: RAILS_ENV
-          value: test
-        - name: SEMAPHORE_CI
-          value: "true"
-
-      prologue:
-        commands:
-          - sem-version ruby 2.6.0 -f
-          - cache restore redmine-4.1
-          - cd redmine
-          - yarn
-          - sem-service start postgres
-          - cd plugins
-          - checkout
-          - cp .semaphore/database.yml ../../config/database.yml
-          - bin/setup
-
-      jobs:
-        - name: caching
-          commands:
-            - git clone -b 4.1-stable git@github.com:redmine/redmine.git
-            - cache store redmine-4.1 ./redmine
-        - name: tests
-          commands:
-            - bin/check
+        - name: REDMINE_VERSION
+          value: 4.1
 
   - name: Redmine 4.0 tests
-    execution_time_limit:
-      minutes: 5
-    dependencies: []
     task:
-      secrets: []
       env_vars:
-        - name: RAILS_ENV
-          value: test
-        - name: SEMAPHORE_CI
-          value: "true"
-
-      prologue:
-        commands:
-          - sem-version ruby 2.6.0 -f
-          - cache restore redmine-4.0
-          - cd redmine
-          - yarn
-          - sem-service start postgres
-          - cd plugins
-          - checkout
-          - cp .semaphore/database.yml ../../config/database.yml
-          - bin/setup
-
-      jobs:
-        - name: caching
-          commands:
-            - git clone -b 4.0-stable git@github.com:redmine/redmine.git
-            - cache store redmine-4.0 ./redmine
-        - name: tests
-          commands:
-            - bin/check
+        - name: REDMINE_VERSION
+          value: 4.0
