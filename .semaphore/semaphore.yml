@@ -1,12 +1,12 @@
 version: v1.0
-name: redmine_3cx_plugin
+name: hermes_link
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu2004
 blocks:
   - name: cache
-    taks:
+    task:
       jobs:
         - name: Cache Redmine 5.1
           commands:
