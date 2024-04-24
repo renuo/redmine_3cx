@@ -12,6 +12,8 @@ global_job_config:
       value: test
     - name: SEMAPHORE_CI
       value: "true"
+    - name: DATABSE_ADAPTER
+      value: "postgresql"
     - name: REDMINE_VERSION
       value: "5.1"
     - name: RUBY_VERSION
@@ -32,8 +34,6 @@ blocks:
             - sem-version ruby $RUBY_VERSION -f
             - cache restore redmine-$REDMINE_VERSION
             - cd redmine
-            - yarn
-            - sem-service start postgres
             - cd plugins
             - checkout
             - cp .semaphore/database.yml ../../config/database.yml
@@ -56,7 +56,7 @@ blocks:
             - cache restore gems-$REDMINE_VERSION-$(checksum PluginGemfile)
             - bundle config set --local path vendor/bundle
             - BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
-            - cache store gems-$REDMINE_VERSION-$(checksum PluginGemfile) ./vendor/bundle
+            - cache store gems-$REDMINE_VERSION-$(checksum PluginGemfile) vendor/bundle
           matrix:
             - env_var: REDMINE_VERSION
               values: ["5.1", "5.0", "4.2", "4.1", "4.0"]
@@ -68,6 +68,8 @@ blocks:
             - cd redmine
             - yarn
             - sem-service start postgres
+            - '[[ "$SEMAPHORE_DATABASE_ADAPTER" == "postgres" ]] && sem-service start postgres'
+            - '[[ "$SEMAPHORE_DATABASE_ADAPTER" == "mysql" ]] && sem-service start mysql'
             - cd plugins
             - checkout
             - cache restore gems-$REDMINE_VERSION-$(checksum PluginGemfile)
@@ -76,3 +78,5 @@ blocks:
           matrix:
             - env_var: REDMINE_VERSION
               values: ["5.1", "5.0", "4.2", "4.1", "4.0"]
+            - env_var: SEMAPHORE_DATABASE_ADAPTER
+              values: ["postgresql", "mysql2"]

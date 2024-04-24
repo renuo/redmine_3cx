@@ -8,7 +8,14 @@ cd ../..
 
 # Configure Database
 db=config/database.yml.example
-[[ -v SEMAPHORE_CI ]] && db=plugins/hermes_link/.semaphore/database.yml
+[[ -v SEMAPHORE_CI ]] && db=plugins/hermes_link/.semaphore/database_postgres.yml
+if [[ -v SEMAPHORE_CI ]]; then
+	if [[ "$SEMAPHORE_DATABASE_ADAPTER" == "mysql2" ]]; then
+		db=plugins/hermes_link/.semaphore/database_mysql.yml
+	else
+		db=plugins/hermes_link/.semaphore/database_postgres.yml
+	fi
+fi
 cp -n $db config/database.yml
 
 bundle install -j 4
