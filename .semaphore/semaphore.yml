@@ -5,10 +5,33 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 blocks:
+  - name: Cache Redmine
+    taks:
+      jobs:
+        - name: Cache Redmine 5.1
+          commands:
+            - git clone -b 5.1-stable git@github.com/redmine/redmine.git
+            - cache store redmine-5.1 ./redmine
+        - name: Cache Redmine 5.0
+          commands:
+            - git clone -b 5.0-stable git@github.com/redmine/redmine.git
+            - cache store redmine-5.0 ./redmine
+        - name: Cache Redmine 4.2
+          commands:
+            - git clone -b 4.2-stable git@github.com/redmine/redmine.git
+            - cache store redmine-4.2 ./redmine
+        - name: Cache Redmine 4.1
+          commands:
+            - git clone -b 4.1-stable git@github.com/redmine/redmine.git
+            - cache store redmine-4.1 ./redmine
+        - name: Cache Redmine 4.0
+          commands:
+            - git clone -b 4.0-stable git@github.com/redmine/redmine.git
+            - cache store redmine-4.0 ./redmine
   - name: Redmine 5.1 tests
     execution_time_limit:
       minutes: 5
-    dependencies: []
+    dependencies: ["Cache Redmine"]
     task:
       secrets: []
       env_vars:
@@ -20,7 +43,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 3.1 -f
-          - git clone -b 5.1-stable git@github.com:redmine/redmine.git
+          - cache restore redmine-5.1 ./redmine
           - cd redmine
           - yarn
           - sem-service start postgres
@@ -40,7 +63,7 @@ blocks:
   - name: Redmine 5.0 tests
     execution_time_limit:
       minutes: 5
-    dependencies: []
+    dependencies: ["Cache Redmine"]
     task:
       secrets: []
       env_vars:
@@ -52,7 +75,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 3.1 -f
-          - git clone -b 5.0-stable git@github.com:redmine/redmine.git
+          - cache restore redmine-5.0 ./redmine
           - cd redmine
           - yarn
           - sem-service start postgres
@@ -69,7 +92,7 @@ blocks:
   - name: Redmine 4.2 tests
     execution_time_limit:
       minutes: 5
-    dependencies: []
+    dependencies: ["Cache Redmine"]
     task:
       secrets: []
       env_vars:
@@ -81,7 +104,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 2.5.7 -f
-          - git clone -b 4.2-stable git@github.com:redmine/redmine.git
+          - cache restore redmine-4.2 ./redmine
           - cd redmine
           - yarn
           - sem-service start postgres
@@ -98,7 +121,7 @@ blocks:
   - name: Redmine 4.1 tests
     execution_time_limit:
       minutes: 5
-    dependencies: []
+    dependencies: ["Cache Redmine"]
     task:
       secrets: []
       env_vars:
@@ -110,7 +133,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 2.5.4 -f
-          - git clone -b 4.1-stable git@github.com:redmine/redmine.git
+          - cache restore redmine-4.1 ./redmine
           - cd redmine
           - yarn
           - sem-service start postgres
@@ -127,7 +150,7 @@ blocks:
   - name: Redmine 4.0 tests
     execution_time_limit:
       minutes: 5
-    dependencies: []
+    dependencies: ["Cache Redmine"]
     task:
       secrets: []
       env_vars:
@@ -139,7 +162,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 2.4.0 -f
-          - git clone -b 4.0-stable git@github.com:redmine/redmine.git
+          - cache restore redmine-4.0 ./redmine
           - cd redmine
           - yarn
           - sem-service start postgres
