@@ -68,6 +68,9 @@ blocks:
             - yarn
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - cd plugins
+            - curl -L -o redmine_contacts.zip $REDMINE_CRM_DOWNLOAD_URL
+            - unzip redmine_contacts.zip
+            - rake redmine:plugins NAME=redmine_contacts
             - checkout
             - cache restore gems-$REDMINE_VERSION-$(checksum PluginGemfile)
             - bin/setup
