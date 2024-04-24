@@ -7,8 +7,6 @@ agent:
 
 global_job_config:
   secrets: []
-  execution_time_limit:
-    minutes: 5
   env_vars:
     - name: RAILS_ENV
       value: test
@@ -21,9 +19,15 @@ global_job_config:
 
 blocks:
   - name: Linting
+    dependencies: []
+    execution_time_limit:
+      minutes: 2
     task:
       jobs:
         - name: linter
+          env_vars:
+            - name: RUBY_VERSION
+              value: "3.1.1"
           commands:
             - sem-version ruby $RUBY_VERSION -f
             - cache restore redmine-$REDMINE_VERSION
@@ -37,6 +41,9 @@ blocks:
             - bin/fastcheck
 
   - name: Redmine Compatibility
+    dependencies: []
+    execution_time_limit:
+      minutes: 3
     task:
       jobs:
         - name: caching
