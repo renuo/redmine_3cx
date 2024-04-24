@@ -15,7 +15,7 @@ global_job_config:
     - name: REDMINE_VERSION
       value: "5.1"
     - name: RUBY_VERSION
-      value: "2.6.0"
+      value: "2.6.5"
 
 blocks:
   - name: Linting
@@ -55,6 +55,7 @@ blocks:
               values: ["5.1", "5.0", "4.2", "4.1", "4.0"]
         - name: checks
           commands:
+            - if [[ "$REDMINE_VERSION" == "5.0" || "$REDMINE_VERSION" == "5.1" ]]; then RUBY_VERSION="3.1.1"; fi
             - sem-version ruby $RUBY_VERSION -f
             - cache restore redmine-$REDMINE_VERSION
             - cd redmine
