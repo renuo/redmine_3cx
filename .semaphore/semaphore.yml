@@ -46,7 +46,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 3.1 -f
-          - cache restore redmine-5.1 ./redmine
+          - cache restore redmine-5.1
           - cd redmine
           - yarn
           - sem-service start postgres
@@ -78,7 +78,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 3.1 -f
-          - cache restore redmine-5.0 ./redmine
+          - cache restore redmine-5.0
           - cd redmine
           - yarn
           - sem-service start postgres
@@ -107,7 +107,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 2.5.7 -f
-          - cache restore redmine-4.2 ./redmine
+          - cache restore redmine-4.2
           - cd redmine
           - yarn
           - sem-service start postgres
@@ -136,7 +136,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 2.5.4 -f
-          - cache restore redmine-4.1 ./redmine
+          - cache restore redmine-4.1
           - cd redmine
           - yarn
           - sem-service start postgres
@@ -165,7 +165,7 @@ blocks:
       prologue:
         commands:
           - sem-version ruby 2.4.0 -f
-          - cache restore redmine-4.0 ./redmine
+          - cache restore redmine-4.0
           - cd redmine
           - yarn
           - sem-service start postgres
