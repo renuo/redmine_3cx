@@ -68,8 +68,8 @@ blocks:
             - cd redmine
             - yarn
             - sem-service start postgres
-            - '[[ "$SEMAPHORE_DATABASE_ADAPTER" == "postgres" ]] && sem-service start postgres'
-            - '[[ "$SEMAPHORE_DATABASE_ADAPTER" == "mysql" ]] && sem-service start mysql'
+            - '[ "$SEMAPHORE_DATABASE_ADAPTER" = "postgres" ] && sem-service start postgres'
+            - '[ "$SEMAPHORE_DATABASE_ADAPTER" = "mysql" ] && sem-service start mysql'
             - cd plugins
             - checkout
             - cache restore gems-$REDMINE_VERSION-$(checksum PluginGemfile)
