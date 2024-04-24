@@ -13,23 +13,23 @@ blocks:
       jobs:
         - name: Cache Redmine 5.1
           commands:
-            - git clone -b 5.1-stable git@github.com/redmine/redmine.git
+            - git clone -b 5.1-stable git@github.com:redmine/redmine.git
             - cache store redmine-5.1 ./redmine
         - name: Cache Redmine 5.0
           commands:
-            - git clone -b 5.0-stable git@github.com/redmine/redmine.git
+            - git clone -b 5.0-stable git@github.com:redmine/redmine.git
             - cache store redmine-5.0 ./redmine
         - name: Cache Redmine 4.2
           commands:
-            - git clone -b 4.2-stable git@github.com/redmine/redmine.git
+            - git clone -b 4.2-stable git@github.com:redmine/redmine.git
             - cache store redmine-4.2 ./redmine
         - name: Cache Redmine 4.1
           commands:
-            - git clone -b 4.1-stable git@github.com/redmine/redmine.git
+            - git clone -b 4.1-stable git@github.com:redmine/redmine.git
             - cache store redmine-4.1 ./redmine
         - name: Cache Redmine 4.0
           commands:
-            - git clone -b 4.0-stable git@github.com/redmine/redmine.git
+            - git clone -b 4.0-stable git@github.com:redmine/redmine.git
             - cache store redmine-4.0 ./redmine
   - name: Redmine 5.1 tests
     execution_time_limit:
