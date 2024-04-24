@@ -80,7 +80,7 @@ blocks:
 
       prologue:
         commands:
-          - sem-version ruby 3.1 -f
+          - sem-version ruby 2.5.7 -f
           - git clone -b 4.2-stable git@github.com:redmine/redmine.git
           - cd redmine
           - yarn
@@ -109,7 +109,7 @@ blocks:
 
       prologue:
         commands:
-          - sem-version ruby 3.1 -f
+          - sem-version ruby 2.5.4 -f
           - git clone -b 4.1-stable git@github.com:redmine/redmine.git
           - cd redmine
           - yarn
@@ -138,7 +138,7 @@ blocks:
 
       prologue:
         commands:
-          - sem-version ruby 3.1 -f
+          - sem-version ruby 2.4.0 -f
           - git clone -b 4.0-stable git@github.com:redmine/redmine.git
           - cd redmine
           - yarn
