@@ -48,8 +48,15 @@ blocks:
       jobs:
         - name: caching
           commands:
+            - if [[ "$REDMINE_VERSION" == "5.0" || "$REDMINE_VERSION" == "5.1" ]]; then RUBY_VERSION="3.1.1"; fi
             - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
             - cache store redmine-$REDMINE_VERSION ./redmine
+            - cd redmine/plugins
+            - checkout
+            - cache restore gems-$REDMINE_VERSION-$(checksum PluginGemfile)
+            - bundle config set --local path vendor/bundle
+            - BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
+            - cache store gems-$REDMINE_VERSION-$(checksum PluginGemfile) ./vendor/bundle
           matrix:
             - env_var: REDMINE_VERSION
               values: ["5.1", "5.0", "4.2", "4.1", "4.0"]
@@ -63,6 +70,7 @@ blocks:
             - sem-service start postgres
             - cd plugins
             - checkout
+            - cache restore gems-$REDMINE_VERSION-$(checksum PluginGemfile)
             - cp .semaphore/database.yml ../../config/database.yml
             - bin/setup
           matrix:
