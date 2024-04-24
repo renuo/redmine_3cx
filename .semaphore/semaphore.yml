@@ -5,7 +5,7 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 blocks:
-  - name: Cache Redmine
+  - name: cache
     taks:
       jobs:
         - name: Cache Redmine 5.1
@@ -31,7 +31,7 @@ blocks:
   - name: Redmine 5.1 tests
     execution_time_limit:
       minutes: 5
-    dependencies: ["Cache Redmine"]
+    dependencies: ["cache"]
     task:
       secrets: []
       env_vars:
@@ -63,7 +63,7 @@ blocks:
   - name: Redmine 5.0 tests
     execution_time_limit:
       minutes: 5
-    dependencies: ["Cache Redmine"]
+    dependencies: ["cache"]
     task:
       secrets: []
       env_vars:
@@ -92,7 +92,7 @@ blocks:
   - name: Redmine 4.2 tests
     execution_time_limit:
       minutes: 5
-    dependencies: ["Cache Redmine"]
+    dependencies: ["cache"]
     task:
       secrets: []
       env_vars:
@@ -121,7 +121,7 @@ blocks:
   - name: Redmine 4.1 tests
     execution_time_limit:
       minutes: 5
-    dependencies: ["Cache Redmine"]
+    dependencies: ["cache"]
     task:
       secrets: []
       env_vars:
@@ -150,7 +150,7 @@ blocks:
   - name: Redmine 4.0 tests
     execution_time_limit:
       minutes: 5
-    dependencies: ["Cache Redmine"]
+    dependencies: ["cache"]
     task:
       secrets: []
       env_vars:
