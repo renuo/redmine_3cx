@@ -36,11 +36,10 @@ blocks:
             - cd redmine
             - cd plugins
             - checkout
-            - cp .semaphore/database.yml ../../config/database.yml
-            - bin/setup
+            - bundle install -j 4
             - bin/fastcheck
 
-  - name: Redmine Compatibility
+  - name: Redmine Checks
     dependencies: []
     execution_time_limit:
       minutes: 3
@@ -67,16 +66,13 @@ blocks:
             - cache restore redmine-$REDMINE_VERSION
             - cd redmine
             - yarn
-            - sem-service start postgres
-            - '[ "$SEMAPHORE_DATABASE_ADAPTER" = "postgres" ] && sem-service start postgres'
-            - '[ "$SEMAPHORE_DATABASE_ADAPTER" = "mysql" ] && sem-service start mysql'
+            - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - cd plugins
             - checkout
             - cache restore gems-$REDMINE_VERSION-$(checksum PluginGemfile)
-            - cp .semaphore/database.yml ../../config/database.yml
             - bin/setup
           matrix:
             - env_var: REDMINE_VERSION
               values: ["5.1", "5.0", "4.2", "4.1", "4.0"]
             - env_var: SEMAPHORE_DATABASE_ADAPTER
-              values: ["postgresql", "mysql2"]
+              values: ["postgres", "mysql"]

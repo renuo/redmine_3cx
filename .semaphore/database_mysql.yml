@@ -4,8 +4,6 @@ default: &default
   username: root
   password: ""
   encoding: utf8mb4
-  variables:
-    transaction_isolation: "READ-COMMITTED"
 
 production:
   <<: *default
