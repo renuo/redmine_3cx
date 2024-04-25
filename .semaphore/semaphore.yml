@@ -55,7 +55,7 @@ blocks:
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - cd plugins
             - checkout
-            - cp .semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml config/database.yml
+            - cp .semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml ../../config/database.yml
             - cd ../..
             - bundle
             - cd plugins/hermes_link
