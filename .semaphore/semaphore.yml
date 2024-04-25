@@ -65,6 +65,9 @@ blocks:
     task:
       jobs:
         - name: checks
+          env_vars:
+            - name: RUBY_VERSION
+              value: "2.6.10"
           commands:
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
@@ -79,5 +82,3 @@ blocks:
               values: ["4.2", "4.1", "4.0"]
             - env_var: SEMAPHORE_DATABASE_ADAPTER
               values: ["postgres", "mysql"]
-            - env_var: RUBY_VERSION
-              values: ["2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.5", "2.6.6", "2.6.7", "2.6.8", "2.6.9", "2.6.10"]
