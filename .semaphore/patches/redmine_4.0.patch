@@ -1,0 +1,26 @@
+From c20b1b0e5cd6f20d1e49e0a139e8b3be8891969a Mon Sep 17 00:00:00 2001
+From: Marius BALTEANU <marius.balteanu@zitec.com>
+Date: Sun, 28 Mar 2021 21:17:16 +0300
+Subject: [PATCH 2/8] Fix "undefined method  for nil:NilClass" in Rails 6.1
+
+---
+ config/application.rb | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/config/application.rb b/config/application.rb
+index 72546d180..29127891b 100644
+--- a/config/application.rb
++++ b/config/application.rb
+@@ -56,9 +56,6 @@ module RedmineApp
+     # Do not include all helpers
+     config.action_controller.include_all_helpers = false
+ 
+-    # Since Redmine 4.0, boolean values are stored in sqlite3 databases as 1 and 0
+-    config.active_record.sqlite3.represent_boolean_as_integer = true
+-
+     # Sets the Content-Length header on responses with fixed-length bodies
+     config.middleware.insert_before Rack::Sendfile, Rack::ContentLength
+ 
+-- 
+2.22.0
+
