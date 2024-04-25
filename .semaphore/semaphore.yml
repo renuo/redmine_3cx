@@ -52,6 +52,7 @@ blocks:
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - checkout
+            - cd ~
             - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
             - cd ~/redmine
             - cp ~/hermes_link/.semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml config/database.yml
