@@ -68,6 +68,7 @@ blocks:
             - mv ~/hermes_link ~/redmine/plugins
             - cd ~/redmine/plugins/hermes_link
             - BUNDLE_GEMFILE=PluginGemfile bundle
+            - bundle update
             - bin/check
           matrix:
             - env_var: REDMINE_VERSION
