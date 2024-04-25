@@ -57,6 +57,7 @@ blocks:
             - cd ~/redmine
             - cp ~/hermes_link/.semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml config/database.yml
             - bundle
+            - bundle exec rake db:create db:migrate db:seed
             - cd ~/redmine/plugins
             - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
             - unzip redmine_contacts.zip
@@ -67,7 +68,8 @@ blocks:
             - mv ~/hermes_link ~/redmine/plugins
             - cd ~/redmine/plugins/hermes_link
             - BUNDLE_GEMFILE=PluginGemfile bundle
-            - bundle exec rake db:create db:migrate db:seed hermes_link:seed
+            - rake redmine:plugins NAME=hermes_link
+            - bundle exec rake hermes_link:seed
             - bin/check
           matrix:
             - env_var: REDMINE_VERSION
