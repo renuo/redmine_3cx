@@ -5,7 +5,7 @@ set -e
 mv ~/hermes_link ~/redmine/plugins
 cd ~/redmine/plugins/hermes_link
 rm PluginGemfile.lock
-cache restore gems-redmine-hermes-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION
+cache restore gems-redmine-hermes-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION
 BUNDLE_GEMFILE=PluginGemfile bundle install --path ~/vendor/redmine-bundle
-cache store gems-redmine-hermes-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$(checksum PluginGemfile) ~/vendor/redmine-bundle
+cache store gems-redmine-hermes-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION ~/vendor/redmine-bundle
 bundle exec rake redmine:plugins:migrate
