@@ -31,7 +31,6 @@ blocks:
               value: "3.1.1"
           commands:
             - sem-version ruby $RUBY_VERSION -f
-            - cache restore redmine-$REDMINE_VERSION
             - cd redmine
             - cd plugins
             - checkout
@@ -49,9 +48,7 @@ blocks:
         - name: checks
           commands:
             - sem-version ruby $RUBY_VERSION -f
-            - cache restore redmine-$REDMINE_VERSION
             - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
-            - cache store redmine-$REDMINE_VERSION ./redmine
             - cd redmine
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - cd plugins
@@ -84,9 +81,7 @@ blocks:
 
           commands:
             - sem-version ruby $RUBY_VERSION -f
-            - cache restore redmine-$REDMINE_VERSION
             - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
-            - cache store redmine-$REDMINE_VERSION ./redmine
             - cd redmine
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - cd plugins
