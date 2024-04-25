@@ -7,4 +7,4 @@ unzip redmine_contacts.zip
 cd ~/redmine/plugins/redmine_contacts
 echo 'source "https://rubygems.org"' | cat - Gemfile >temp && mv temp Gemfile
 bundle install --path ~/vendor/redmine-bundle --without development test
-rake redmine:plugins NAME=redmine_contacts
+bundle exec rake redmine:plugins NAME=redmine_contacts
