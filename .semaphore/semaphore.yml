@@ -16,7 +16,7 @@ global_job_config:
     - name: REDMINE_VERSION
       value: "5.1"
     - name: RUBY_VERSION
-      value: "2.6.8"
+      value: "2.6.10"
 
 blocks:
   - name: Linting
