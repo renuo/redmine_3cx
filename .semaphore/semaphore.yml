@@ -94,7 +94,7 @@ blocks:
         - name: hermes_link
       env_vars:
         - name: RUBY_VERSION
-          value: "2.6.6"
+          value: "2.6.3"
       jobs:
         - name: checks
           commands:
