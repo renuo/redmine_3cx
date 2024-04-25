@@ -3,7 +3,7 @@ default: &default
   host: localhost
   username: root
   password: ""
-  encoding: utf8mb4
+  encoding: utf8
 
 production:
   <<: *default
