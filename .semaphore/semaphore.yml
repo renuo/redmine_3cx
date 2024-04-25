@@ -57,6 +57,7 @@ blocks:
             - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
             - unzip redmine_contacts.zip
             - cd redmine_contacts
+            - echo 'source "https://rubygems.org"' | cat - Gemfile > temp && mv temp Gemfile
             - bundle
             - rake redmine:plugins NAME=redmine_contacts
             - cd ..
