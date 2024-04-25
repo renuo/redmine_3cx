@@ -31,10 +31,12 @@ blocks:
               value: "3.1.1"
           commands:
             - sem-version ruby $RUBY_VERSION -f
+            - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
             - cd redmine
+            - bundle
             - cd plugins
             - checkout
-            - bundle install -j 4
+            - BUNDLE_GEMFILE=PluginGemfile bundle
             - bin/fastcheck
 
   - name: Redmine 5
@@ -50,6 +52,7 @@ blocks:
             - sem-version ruby $RUBY_VERSION -f
             - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
             - cd redmine
+            - bundle
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - cd plugins
             - checkout
@@ -58,7 +61,7 @@ blocks:
             - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
             - unzip redmine_contacts.zip
             - cd redmine_contacts
-            - bundle install -j 4
+            - bundle
             - rake redmine:plugins NAME=redmine_contacts
           matrix:
             - env_var: REDMINE_VERSION
@@ -83,6 +86,7 @@ blocks:
             - sem-version ruby $RUBY_VERSION -f
             - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
             - cd redmine
+            - bundle
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - cd plugins
             - checkout
@@ -91,7 +95,7 @@ blocks:
             - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
             - unzip redmine_contacts.zip
             - cd redmine_contacts
-            - bundle install -j 4
+            - bundle
             - rake redmine:plugins NAME=redmine_contacts
           matrix:
             - env_var: REDMINE_VERSION
