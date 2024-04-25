@@ -54,7 +54,7 @@ blocks:
             - checkout
             - cd ~
             - cache restore redmine-$REDMINE_VERSION
-            - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
+            - if [ -d /path/to/directory ]; then git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git; fi
             - cache store redmine-$REDMINE_VERSION ~/redmine
             - cd ~/redmine
             - cp ~/hermes_link/.semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml config/database.yml
