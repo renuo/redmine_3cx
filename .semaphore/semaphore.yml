@@ -42,7 +42,7 @@ blocks:
   - name: Redmine 5
     dependencies: []
     execution_time_limit:
-      minutes: 3
+      minutes: 5
     task:
       secrets:
         - name: hermes_link
@@ -59,12 +59,12 @@ blocks:
             - bundle
             - bundle exec rake db:create db:migrate db:seed
             - cd ~/redmine/plugins
-            - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
-            - unzip redmine_contacts.zip
-            - cd ~/redmine/plugins/redmine_contacts
-            - echo 'source "https://rubygems.org"' | cat - Gemfile > temp && mv temp Gemfile
-            - bundle
-            - rake redmine:plugins NAME=redmine_contacts
+            # - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
+            # - unzip redmine_contacts.zip
+            # - cd ~/redmine/plugins/redmine_contacts
+            # - echo 'source "https://rubygems.org"' | cat - Gemfile > temp && mv temp Gemfile
+            # - bundle
+            # - rake redmine:plugins NAME=redmine_contacts
             - mv ~/hermes_link ~/redmine/plugins
             - cd ~/redmine/plugins/hermes_link
             - rm PluginGemfile.lock
