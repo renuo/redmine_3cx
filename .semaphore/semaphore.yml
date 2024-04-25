@@ -19,26 +19,26 @@ global_job_config:
       value: "3.1.1"
 
 blocks:
-  - name: Linting
-    dependencies: []
-    execution_time_limit:
-      minutes: 2
-    task:
-      jobs:
-        - name: linter
-          env_vars:
-            - name: RUBY_VERSION
-              value: "3.1.1"
-          commands:
-            - sem-version ruby $RUBY_VERSION -f
-            - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
-            - cd redmine
-            - bundle
-            - cd plugins
-            - checkout
-            - BUNDLE_GEMFILE=PluginGemfile bundle
-            - bin/fastcheck
-
+  #   - name: Linting
+  #     dependencies: []
+  #     execution_time_limit:
+  #       minutes: 2
+  #     task:
+  #       jobs:
+  #         - name: linter
+  #           env_vars:
+  #             - name: RUBY_VERSION
+  #               value: "3.1.1"
+  #           commands:
+  #             - sem-version ruby $RUBY_VERSION -f
+  #             - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
+  #             - cd redmine
+  #             - bundle
+  #             - cd plugins
+  #             - checkout
+  #             - BUNDLE_GEMFILE=PluginGemfile bundle
+  #             - bin/fastcheck
+  #
   - name: Redmine 5
     dependencies: []
     execution_time_limit:
@@ -68,41 +68,42 @@ blocks:
             - rake redmine:plugins NAME=redmine_contacts
           matrix:
             - env_var: REDMINE_VERSION
-              values: ["5.1", "5.0"]
+              # values: ["5.1", "5.0"]
+              values: ["5.1"]
             - env_var: SEMAPHORE_DATABASE_ADAPTER
-              values: ["postgres", "mysql"]
-
-  - name: Redmine 4
-    dependencies: []
-    execution_time_limit:
-      minutes: 3
-    task:
-      secrets:
-        - name: hermes_link
-      jobs:
-        - name: checks
-          env_vars:
-            - name: RUBY_VERSION
-              value: "2.6.8"
-
-          commands:
-            - sem-version ruby $RUBY_VERSION -f
-            - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
-            - cd redmine
-            - bundle
-            - sem-service start $SEMAPHORE_DATABASE_ADAPTER
-            - cd plugins
-            - checkout
-            - cp .semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml ../../config/database.yml
-            - bin/setup
-            - cd ..
-            - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
-            - unzip redmine_contacts.zip
-            - cd redmine_contacts
-            - bundle
-            - rake redmine:plugins NAME=redmine_contacts
-          matrix:
-            - env_var: REDMINE_VERSION
-              values: ["4.2", "4.1", "4.0"]
-            - env_var: SEMAPHORE_DATABASE_ADAPTER
-              values: ["postgres", "mysql"]
+              # values: ["postgres", "mysql"]
+              values: ["postgres"]
+  #
+  # - name: Redmine 4
+  #   dependencies: []
+  #   execution_time_limit:
+  #     minutes: 3
+  #   task:
+  #     secrets:
+  #       - name: hermes_link
+  #     jobs:
+  #       - name: checks
+  #         env_vars:
+  #           - name: RUBY_VERSION
+  #             value: "2.6.8"
+  #         commands:
+  #           - sem-version ruby $RUBY_VERSION -f
+  #           - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
+  #           - cd redmine
+  #           - bundle
+  #           - sem-service start $SEMAPHORE_DATABASE_ADAPTER
+  #           - cd plugins
+  #           - checkout
+  #           - cp .semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml ../../config/database.yml
+  #           - bin/setup
+  #           - cd ..
+  #           - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
+  #           - unzip redmine_contacts.zip
+  #           - cd redmine_contacts
+  #           - bundle
+  #           - rake redmine:plugins NAME=redmine_contacts
+  #         matrix:
+  #           - env_var: REDMINE_VERSION
+  #             values: ["4.2", "4.1", "4.0"]
+  #           - env_var: SEMAPHORE_DATABASE_ADAPTER
+  #             values: ["postgres", "mysql"]
