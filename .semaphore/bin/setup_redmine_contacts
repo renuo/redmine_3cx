@@ -9,4 +9,3 @@ echo 'source "https://rubygems.org"' | cat - Gemfile >temp && mv temp Gemfile
 bundle install --path ~/vendor/redmine-bundle --without development test
 cd ~/redmine/
 bundle exec rake redmine:plugins NAME=redmine_contacts
-cd ~/redmine/plugins
