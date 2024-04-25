@@ -54,18 +54,19 @@ blocks:
             - cd redmine
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - cd plugins
+            - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
+            - unzip redmine_contacts.zip
+            - cd redmine_contacts
+            - bundle
+            - rake redmine:plugins NAME=redmine_contacts
+            - cd ..
             - checkout
             - cp .semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml ../../config/database.yml
             - cd ../..
             - bundle
             - cd plugins/hermes_link
             - bin/setup
-            - cd ..
-            - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
-            - unzip redmine_contacts.zip
-            - cd redmine_contacts
-            - bundle
-            - rake redmine:plugins NAME=redmine_contacts
+            - bin/check
           matrix:
             - env_var: REDMINE_VERSION
               # values: ["5.1", "5.0"]
