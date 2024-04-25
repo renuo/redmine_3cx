@@ -2,7 +2,6 @@
 cp -n .ruby-version ../../.ruby-version
 
 # Install Dependencies
-[[ -v SEMAPHORE_CI ]] && bundle config set --local path vendor/bundle
 BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
 cd ../..
 
@@ -13,6 +12,5 @@ if [[ -v SEMAPHORE_DATABASE_ADAPTER ]]; then
 fi
 cp -n $db config/database.yml
 
-bundle install -j 4
 bundle exec rake db:create db:migrate db:seed hermes_link:seed
 bundle exec rake redmine:plugins:migrate
