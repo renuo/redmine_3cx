@@ -61,7 +61,7 @@ blocks:
             - cache restore gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION
             - bundle install --path ~/vendor/redmine-bundle
             - cache store gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$(checksum ~/hermes_link/PluginGemfile) ~/vendor/redmine-bundle
-            - rake db:create db:migrate db:seed
+            - bundle exec rake db:create db:migrate db:seed
             - cd ~/redmine/plugins
             # - curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
             # - unzip redmine_contacts.zip
@@ -75,8 +75,8 @@ blocks:
             - cache restore gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION
             - BUNDLE_GEMFILE=PluginGemfile bundle install --path ~/vendor/redmine-bundle
             - cache store gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$(checksum PluginGemfile) ~/vendor/redmine-bundle
-            - rake redmine:plugins:migrate
-            - rake hermes_link:check
+            - bundle exec rake redmine:plugins:migrate
+            - bundle exec rake hermes_link:check
           matrix:
             - env_var: REDMINE_VERSION
               values: ["5.1", "5.0"]
