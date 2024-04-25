@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 cache restore redmine-$REDMINE_VERSION
 if [ -d /path/to/directory ]; then git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git; fi
 cache store redmine-$REDMINE_VERSION ~/redmine
