@@ -22,26 +22,20 @@ global_job_config:
 
 blocks:
 
-  #   - name: Linting
-  #     dependencies: []
-  #     execution_time_limit:
-  #       minutes: 2
-  #     task:
-  #       jobs:
-  #         - name: linter
-  #           env_vars:
-  #             - name: RUBY_VERSION
-  #               value: "3.1.1"
-  #           commands:
-  #             - sem-version ruby $RUBY_VERSION -f
-  #             - git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git
-  #             - cd redmine
-  #             - bundle
-  #             - cd plugins
-  #             - checkout
-  #             - BUNDLE_GEMFILE=PluginGemfile bundle
-  #             - bin/fastcheck
-  #
+  - name: Fastcheck
+    dependencies: []
+    execution_time_limit:
+      minutes: 2
+    task:
+      jobs:
+        - name: fastcheck
+          env_vars:
+            - name: RUBY_VERSION
+              value: "3.1.1"
+          commands:
+            - sem-version ruby $RUBY_VERSION -f
+            - checkout --use-cache
+            - bin/fastcheck
 
   - name: Redmine 5
     dependencies: []
