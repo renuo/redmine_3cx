@@ -69,7 +69,7 @@ blocks:
             - cd ~/redmine/plugins/hermes_link
             - BUNDLE_GEMFILE=PluginGemfile bundle
             - bundle update
-            - bin/check
+            - rake hermes_link:check
           matrix:
             - env_var: REDMINE_VERSION
               # values: ["5.1", "5.0"]
