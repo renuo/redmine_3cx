@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+cache restore redmine-$REDMINE_VERSION
+if [ -d /path/to/directory ]; then git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git; fi
+cache store redmine-$REDMINE_VERSION ~/redmine
+cd ~/redmine
+cp ~/hermes_link/.semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml config/database.yml
+cache restore gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION
+bundle install --path ~/vendor/redmine-bundle
+cache store gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$(checksum ~/hermes_link/PluginGemfile) ~/vendor/redmine-bundle
+bundle exec rake db:create db:migrate db:seed
