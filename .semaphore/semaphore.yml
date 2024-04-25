@@ -21,52 +21,48 @@ global_job_config:
       value: "3.1.4"
 
 blocks:
+#   - name: Fastcheck
+#     dependencies: []
+#     execution_time_limit:
+#       minutes: 2
+#     task:
+#       jobs:
+#         - name: fastcheck
+#           env_vars:
+#             - name: RUBY_VERSION
+#               value: "3.1.1"
+#           commands:
+#             - sem-version ruby $RUBY_VERSION -f
+#             - checkout --use-cache
+#             - bin/fastcheck
 
-  - name: Fastcheck
-    dependencies: []
-    execution_time_limit:
-      minutes: 2
-    task:
-      jobs:
-        - name: fastcheck
-          env_vars:
-            - name: RUBY_VERSION
-              value: "3.1.1"
-          commands:
-            - sem-version ruby $RUBY_VERSION -f
-            - checkout --use-cache
-            - bin/fastcheck
-
-  - name: Redmine 5
-    dependencies: []
-    execution_time_limit:
-      minutes: 5
-    task:
-      jobs:
-        - name: checks
-          commands:
-            - sem-version ruby $RUBY_VERSION -f
-            - sem-service start $SEMAPHORE_DATABASE_ADAPTER
-            - checkout --use-cache && cd ~
-            - ~/hermes_link/.semaphore/bin/setup_redmine
-            - cd ~/redmine/plugins
-            # - ~/hermes_link/.semaphore/bin/setup_redmine_contacts
-            - ~/hermes_link/.semaphore/bin/setup_hermes_link
-            - bundle exec rake hermes_link:check
-          matrix:
-            - env_var: REDMINE_VERSION
-              values: ["5.1", "5.0"]
-            - env_var: SEMAPHORE_DATABASE_ADAPTER
-              values: ["postgres", "mysql"]
+  # - name: Redmine 5
+  #   dependencies: []
+  #   execution_time_limit:
+  #     minutes: 5
+  #   task:
+  #     jobs:
+  #       - name: checks
+  #         commands:
+  #           - sem-version ruby $RUBY_VERSION -f
+  #           - sem-service start $SEMAPHORE_DATABASE_ADAPTER
+  #           - checkout --use-cache && cd ~
+  #           - ~/hermes_link/.semaphore/bin/setup_redmine
+  #           - cd ~/redmine/plugins
+  #           # - ~/hermes_link/.semaphore/bin/setup_redmine_contacts
+  #           - ~/hermes_link/.semaphore/bin/setup_hermes_link
+  #           - bundle exec rake hermes_link:check
+  #         matrix:
+  #           - env_var: REDMINE_VERSION
+  #             values: ["5.1", "5.0"]
+  #           - env_var: SEMAPHORE_DATABASE_ADAPTER
+  #             values: ["postgres", "mysql"]
 
   - name: Redmine 4
     dependencies: []
     execution_time_limit:
       minutes: 5
     task:
-      env_vars:
-        - name: RUBY_VERSION
-          value: "2.6.3"
       jobs:
         - name: checks
           commands:
@@ -83,3 +79,5 @@ blocks:
               values: ["4.2", "4.1", "4.0"]
             - env_var: SEMAPHORE_DATABASE_ADAPTER
               values: ["postgres", "mysql"]
+            - env_var: RUBY_VERSION
+              values: ["2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.5", "2.6.6", "2.6.7", "2.6.8", "2.6.9", "2.6.10"]
