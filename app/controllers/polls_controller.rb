@@ -2,7 +2,7 @@ class PollsController < ApplicationController
   before_action :find_project, :authorize, only: [:index, :vote]
 
   def index
-    @polls = @project.polls
+    @polls = Polls.where(project_id: params[:project_id])
   end
 
   def vote
