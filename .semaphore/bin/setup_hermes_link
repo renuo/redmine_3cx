@@ -8,4 +8,4 @@ rm PluginGemfile.lock
 cache restore gems-redmine-hermes-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION-$(checksum PluginGemfile)
 BUNDLE_GEMFILE=PluginGemfile bundle install --path ~/vendor/redmine-bundle
 cache store gems-redmine-hermes-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION-$(checksum PluginGemfile) ~/vendor/redmine-bundle
-bundle exec rake redmine:plugins:migrate
+bundle exec rake redmine:plugins:migrate NAME=hermes_link
