@@ -40,6 +40,6 @@ blocks:
             - ~/hermes_link/.semaphore/bin/setup_redmine_contacts
           matrix:
             - env_var: REDMINE_VERSION
-              values: [4.0"]
+              values: ["4.0"]
             - env_var: SEMAPHORE_DATABASE_ADAPTER
               values: ["postgres", "mysql"]
