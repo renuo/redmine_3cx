@@ -2,7 +2,7 @@ class PollsController < ApplicationController
   before_action :find_project, :authorize, only: [:index, :vote]
 
   def index
-    @polls = Poll.all
+    @polls = Poll.all # @project.polls
   end
 
   def vote

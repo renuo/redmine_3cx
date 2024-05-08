@@ -1,12 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env bash
 
-require "bundler/inline"
-
-gemfile do
-  source "https://rubygems.org"
-  gem "standardrb"
-  gem "brakeman"
-end
-
-system "standardrb --fix"
-system "brakeman -q -z --no-summary --no-pager"
+bundle exec standardrb --fix
+bundle exec brakeman -q -z --no-summary --no-pager

@@ -2,10 +2,15 @@
 cp -n .ruby-version ../../.ruby-version
 
 # Install Dependencies
+[[ -v GITHUB_ACTIONS ]] && bundle config set --local path vendor/bundle
 BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
 cd ../..
 
-cp -n config/database.example.yml config/database.yml
+# Configure Database
+db=config/database.yml.example
+[[ -v GITHUB_ACTIONS ]] && db=plugins/redmine_3cx_plugin/.github/database.yml
+cp -n $db config/database.yml
 
-bundle exec rake db:create db:migrate db:seed hermes_link:seed
+bundle install -j 4
+bundle exec rake db:create db:migrate db:seed redmine_3cx_plugin:seed
 bundle exec rake redmine:plugins:migrate
