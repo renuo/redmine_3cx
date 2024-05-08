@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+cache restore redmine-$REDMINE_VERSION
+if [ ! -d ~/redmine ]; then git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git; fi
+cache store redmine-$REDMINE_VERSION ~/redmine
+cd ~/redmine
+cp ~/hermes_link/.semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml config/database.yml
+echo 'gem "loofah", "< 2.21.0"' >Gemfile.local
+cache restore gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION
+bundle install --path ~/vendor/redmine-bundle
+cache store gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION ~/vendor/redmine-bundle
+bundle exec rake db:create db:migrate db:seed
