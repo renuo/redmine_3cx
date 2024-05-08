@@ -1,7 +1,7 @@
 # require_dependency File.expand_path("lib/polls_hook_listener", __dir__)
 
 Redmine::Plugin.register :redmine_3cx do
-  name "3CX Plugin Redmine"
+  name "Redmine 3CX Plugin"
   author "Daniel Bengl"
   description "A simple 3CX integration plugin."
   version "0.0.1"
