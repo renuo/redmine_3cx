@@ -5,7 +5,7 @@ set -e
 curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
 unzip redmine_contacts.zip
 cd ~/redmine/plugins/redmine_contacts
-sed -i '1s/^/source "https://rubygems.org" /' Gemfile
+sed -i '1s/^/source "https:\/\/rubygems.org"\n/' Gemfile
 bundle install --path ~/vendor/redmine-bundle --without development test
 cd ~/redmine/
 bundle exec rake redmine:plugins NAME=redmine_contacts
