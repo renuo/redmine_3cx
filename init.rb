@@ -1,11 +1,11 @@
 # require_dependency File.expand_path("lib/polls_hook_listener", __dir__)
 
-Redmine::Plugin.register :hermes_link do
+Redmine::Plugin.register :redmine_3cx do
   name "3CX Plugin Redmine"
   author "Daniel Bengl"
   description "A simple 3CX integration plugin."
   version "0.0.1"
-  url "https://github.com/renuo/hermes_link"
+  url "https://github.com/renuo/redmine_3cx"
   author_url "http://example.com/about"
   menu :application_menu, :polls, {controller: "polls", action: "index"}, caption: "Polls"
   permission :polls, {polls: [:index, :vote]}, public: true
