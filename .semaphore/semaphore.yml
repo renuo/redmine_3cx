@@ -1,5 +1,5 @@
 version: v1.0
-name: hermes_link
+name: redmine_3cx
 agent:
   machine:
     type: e1-standard-2
@@ -7,7 +7,7 @@ agent:
 
 global_job_config:
   secrets:
-    - name: hermes_link
+    - name: redmine_3cx
   env_vars:
     - name: RAILS_ENV
       value: test
@@ -47,12 +47,12 @@ blocks:
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - checkout --use-cache && cd ~
-            - ~/hermes_link/.semaphore/bin/setup_redmine
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine
             - cd ~/redmine/plugins
-            - ~/hermes_link/.semaphore/bin/setup_redmine_contacts
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
             - cd ~/redmine/plugins
-            - ~/hermes_link/.semaphore/bin/setup_hermes_link
-            - bundle exec rake hermes_link:check
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
+            - bundle exec rake redmine_3cx:check
           matrix:
             - env_var: REDMINE_VERSION
               values: ["5.1", "5.0"]
@@ -73,12 +73,12 @@ blocks:
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - checkout --use-cache && cd ~
-            - ~/hermes_link/.semaphore/bin/setup_redmine
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine
             - cd ~/redmine/plugins
-            - ~/hermes_link/.semaphore/bin/setup_redmine_contacts
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
             - cd ~/redmine/plugins
-            - ~/hermes_link/.semaphore/bin/setup_hermes_link
-            - bundle exec rake hermes_link:check
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
+            - bundle exec rake redmine_3cx:check
           matrix:
             - env_var: REDMINE_VERSION
               values: ["4.2", "4.1", "4.0"]

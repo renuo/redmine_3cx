@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+mv ~/redmine-3cx ~/redmine/plugins
+cd ~/redmine/plugins/redmine-3cx
+rm PluginGemfile.lock
+cache restore gems-redmine-3cx-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION-$(checksum PluginGemfile)
+BUNDLE_GEMFILE=PluginGemfile bundle install --path ~/vendor/redmine-bundle
+cache store gems-redmine-3cx-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION-$(checksum PluginGemfile) ~/vendor/redmine-bundle
+bundle exec rake redmine:plugins:migrate
