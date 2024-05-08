@@ -1,4 +1,4 @@
-namespace :redmine_3cx_plugin do
+namespace :hermes_link do
   desc "Seed database"
   task seed: :environment do
     # TODO: implement
