@@ -7,5 +7,5 @@ cd ../..
 
 cp -n config/database.example.yml config/database.yml
 
-bundle exec rake db:create db:migrate db:seed hermes_link:seed
+bundle exec rake db:create db:migrate db:seed redmine_3cx:seed
 bundle exec rake redmine:plugins:migrate
