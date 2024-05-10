@@ -1,13 +1,11 @@
 require_relative "../test_helper"
 
 class CrmApiControllerTest < ActionController::TestCase
-  fixtures :roles
-
   include FactoryBot::Syntax::Methods
   include Benchmarker
 
   def setup
-    Setting.rest_api_enabled = true
+    Setting.rest_api_enabled = "1"
     @user = create(:user)
     @api_key = @user.api_key
     @contact = create(:contact)
