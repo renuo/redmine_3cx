@@ -1,0 +1,55 @@
+<Crm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Country="CH" Name="Redmine" Version="1" SupportsEmojis="false">
+  <Number Prefix="AsIs" MaxLength="[MaxLength]" />
+  <Connection MaxConcurrentRequests="8" />
+  <Parameters>
+    <Parameter Name="Email" Type="String" Parent="General Configuration" Editor="String" Title="Email:" />
+    <Parameter Name="Password" Type="Password" Parent="General Configuration" Editor="String" Title="Password:" />
+
+    <Parameter Name="Domain" Type="String" Parent="General Configuration" Editor="String" Title="Domain:" />
+    <Parameter Name="CreateContactEnabled" Type="Boolean" Editor="String" Title="Enable Contact Creation" Default="False" />
+    <Parameter Name="CreateOnCallDirection" Type="List" Parent="CreateContactEnabled" Editor="String" Title="Create Contacts on Call Direction:" Default="Inbound" ListValues="Inbound,Inbound/Outbound" />
+    <Parameter Name="CreateContactName" Type="String" Parent="CreateContactEnabled" Editor="String" Title="New Contact Name:" Default="New 3CX Contact [Number]" />
+  </Parameters>
+  <Authentication Type="Basic">
+    <Value>[Email]:[Password]</Value>
+  </Authentication>
+  <Scenarios>
+    <Scenario Type="REST">
+      <Request Url="https://[Domain]/contacts_crm.json?phone:[[Number].Replace(&quot;+&quot;,&quot;%2B&quot;)]" MessagePasses="0" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
+        <Headers>
+        </Headers>
+      </Request>
+      <Variables>
+        <Variable Name="Id">users.id<Filter /></Variable>
+        <Variable Name="Name">users.name<Filter /></Variable>
+        <Variable Name="Company">users.company</Variable>
+        <Variable Name="Phone">users.phone<Filter /></Variable>
+        <Variable Name="Url">users.url<Filter /></Variable>
+      </Variables>
+    </Scenario>
+    <Scenario Id="CreateContactRecord" Type="REST">
+      <Request SkipIf="[CreateContactEnabled]!=True||[IIf([CreateOnCallDirection]==Inbound,[CallDirection]!=Inbound,False)]==True" Url="https://[Domain]/contacts_crm.json" MessagePasses="0" RequestEncoding="Json" RequestType="Post" ResponseType="Json">
+        <Headers></Headers>
+        <PostValues>
+          <Object Key="user">
+            <Value Key="name" Passes="2" Type="String">[[CreateContactName]]</Value>
+            <Value Key="phone" Passes="1" Type="String">[Number]</Value>
+            <Value Key="role" Passes="1" Type="String">end-user</Value>
+          </Object>
+        </PostValues>
+      </Request>
+      <Variables>
+        <Variable Name="Phone" Path="user.phone">
+          <Filter />
+        </Variable>
+      </Variables>
+      <Outputs AllowEmpty="false">
+        <Output Type="ContactUrl" Passes="0" Value="https://[Domain]/contacts_crm.json?phone=[Number]" />
+        <Output Type="FirstName" Passes="2" Value="[[CreateContactName]]" />
+        <Output Type="PhoneBusiness" Passes="0" Value="[Number]" />
+        <Output Type="EntityId" Passes="0" Value="[Id]" />
+        <Output Type="EntityType" Passes="0" Value="Contact" />
+      </Outputs>
+    </Scenario>
+  </Scenarios>
+</Crm>
