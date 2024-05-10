@@ -1,0 +1,2 @@
+class CrmApiController < ApplicationController
+end
