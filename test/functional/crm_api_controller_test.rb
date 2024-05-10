@@ -74,4 +74,10 @@ class CrmApiControllerTest < ActionController::TestCase
       }
     }
   end
+
+  def test_show_not_found
+    get :show, params: {phone: "not-found"}, format: :json
+    assert_response :not_found
+    assert_equal response.body, {error: "Not found"}.to_json
+  end
 end
