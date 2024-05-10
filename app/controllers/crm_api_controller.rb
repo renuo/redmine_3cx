@@ -20,4 +20,12 @@ class CrmApiController < ApplicationController
       contact.phones.map { |phone| ContactSerializer.map_phone_number(phone) }.include?(phone_number)
     end
   end
+
+  private
+
+  def find_contact
+    @contact = Contact.find_by(phone: params[:phone])
+
+    render json: {error: "Not found"}, status: :not_found if @contact.nil?
+  end
 end

@@ -5,6 +5,9 @@ class CrmApiControllerTest < ActionController::TestCase
   include Benchmarker
 
   def setup
+    Setting.rest_api_enabled = "1"
+    @user = create(:user)
+    @api_key = @user.api_key
     @contact = create(:contact)
     @expected_contact_response = {
       "contacts" => [{
@@ -60,6 +63,11 @@ class CrmApiControllerTest < ActionController::TestCase
     @contact = create(:contact)
   end
 
+  def test_show_unauthorized
+    get :show, params: {phone: "1234567890"}, format: :json
+    assert_response :forbidden
+  end
+
   def test_show
     get_show_page
     assert_response :success
@@ -91,6 +99,10 @@ class CrmApiControllerTest < ActionController::TestCase
   private
 
   def get_show_page
+    # headers = {"X-Redmine-API-Key" => @api_key}
+    pp @user
+    @request.session[:user_id] = 2
+    # @request.headers.merge! headers
     get :show, params: {phone: @contact.phone}, format: :json
   end
 end
