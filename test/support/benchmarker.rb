@@ -2,8 +2,8 @@ require "minitest/autorun"
 require "benchmark"
 
 module Benchmarker
-  def benchmark(description, percentile:, max_time_ms:, runs:, &)
-    report = runs.times.map { Benchmark.ms { yield } }
+  def benchmark(description, percentile:, max_time_ms:, runs:, &block)
+    report = runs.times.map { Benchmark.ms(&block) }
 
     percentile_time = calculate_percentile_time(report, percentile)
     error_message = "#{description} exceeded #{percentile} percentile time of #{max_time_ms}ms"
