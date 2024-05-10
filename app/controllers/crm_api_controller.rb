@@ -9,6 +9,7 @@ class CrmApiController < ApplicationController
     render json: {contact: {
       firstname: @contact.first_name,
       lastname: @contact.last_name,
+      company: @contact.company,
       phone: @contact.phone
     }}
   end

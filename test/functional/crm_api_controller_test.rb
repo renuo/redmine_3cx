@@ -17,6 +17,7 @@ class CrmApiControllerTest < ActionController::TestCase
       "contact" => {
         "firstname" => "John",
         "lastname" => "Doe",
+        "company" => "Example AG",
         "phone" => "1234567890"
       }
     }.to_json

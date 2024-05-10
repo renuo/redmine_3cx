@@ -8,6 +8,7 @@ FactoryBot.define do
     association :project
     first_name { "John" }
     last_name { "Doe" }
+    company { "Example AG" }
     phone { "1234567890" }
   end
 end
