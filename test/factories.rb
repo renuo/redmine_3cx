@@ -1,8 +1,13 @@
 # This will guess the User class
 FactoryBot.define do
+  factory :project do
+    name { "Project" }
+    identifier { "my_project" }
+  end
   factory :contact do
-    firstname { "John" }
-    lastname { "Doe" }
+    association :project
+    first_name { "John" }
+    last_name { "Doe" }
     phone { "1234567890" }
   end
 end
