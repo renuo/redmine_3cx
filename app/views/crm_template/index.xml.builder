@@ -20,6 +20,10 @@ xml.Crm("xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance",
 
   xml.Scenarios do
     xml.Scenario("Type" => "REST") do
+      xml.Request("Url" => "[Domain]/crm_contacts.json")
+    end
+
+    xml.Scenario("Id" => "CreateContactRecord", "Type" => "REST") do
       xml.Request("Url" => "...",
         "MessagePasses" => "0",
         "RequestEncoding" => "UrlEncoded",
