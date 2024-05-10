@@ -1,11 +1,13 @@
 require_relative "../test_helper"
 
 class CrmApiControllerTest < ActionController::TestCase
+  fixtures :roles
+
   include FactoryBot::Syntax::Methods
   include Benchmarker
 
   def setup
-    Setting.rest_api_enabled = "1"
+    Setting.rest_api_enabled = true
     @user = create(:user)
     @api_key = @user.api_key
     @contact = create(:contact)
@@ -99,10 +101,8 @@ class CrmApiControllerTest < ActionController::TestCase
   private
 
   def get_show_page
-    # headers = {"X-Redmine-API-Key" => @api_key}
-    pp @user
-    @request.session[:user_id] = 2
-    # @request.headers.merge! headers
+    headers = {"X-Redmine-API-Key" => @api_key}
+    @request.headers.merge! headers
     get :show, params: {phone: @contact.phone}, format: :json
   end
 end
