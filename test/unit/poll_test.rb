@@ -1,8 +1,10 @@
 require_relative "../test_helper"
 
 class PollTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  include FactoryBot::Syntax::Methods
+
+  def test_factory
+    @poll = create(:poll)
+    assert_equal @poll.valid?, true
   end
 end
