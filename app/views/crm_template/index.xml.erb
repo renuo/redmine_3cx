@@ -15,7 +15,7 @@
   </Authentication>
   <Scenarios>
     <Scenario Type="REST">
-      <Request Url="https://[Domain]/contacts_crm.json?phone:[[Number].Replace(&quot;+&quot;,&quot;%2B&quot;)]" MessagePasses="0" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
+      <Request Url="https://[Domain]/3cx/contacts.json?phone:[[Number].Replace(&quot;+&quot;,&quot;%2B&quot;)]" MessagePasses="0" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
         <Headers>
         </Headers>
       </Request>
@@ -28,7 +28,7 @@
       </Variables>
     </Scenario>
     <Scenario Id="CreateContactRecord" Type="REST">
-      <Request SkipIf="[CreateContactEnabled]!=True||[IIf([CreateOnCallDirection]==Inbound,[CallDirection]!=Inbound,False)]==True" Url="https://[Domain]/contacts_crm.json" MessagePasses="0" RequestEncoding="Json" RequestType="Post" ResponseType="Json">
+      <Request SkipIf="[CreateContactEnabled]!=True||[IIf([CreateOnCallDirection]==Inbound,[CallDirection]!=Inbound,False)]==True" Url="https://[Domain]/3cx/contacts.json" MessagePasses="0" RequestEncoding="Json" RequestType="Post" ResponseType="Json">
         <Headers></Headers>
         <PostValues>
           <Object Key="user">
@@ -44,7 +44,7 @@
         </Variable>
       </Variables>
       <Outputs AllowEmpty="false">
-        <Output Type="ContactUrl" Passes="0" Value="https://[Domain]/contacts_crm.json?phone=[Number]" />
+        <Output Type="ContactUrl" Passes="0" Value="https://[Domain]/3cx/contacts.json?phone=[Number]" />
         <Output Type="FirstName" Passes="2" Value="[[CreateContactName]]" />
         <Output Type="PhoneBusiness" Passes="0" Value="[Number]" />
         <Output Type="EntityId" Passes="0" Value="[Id]" />
