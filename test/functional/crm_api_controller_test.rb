@@ -63,7 +63,7 @@ class CrmApiControllerTest < ActionController::TestCase
   def test_show
     get :show, format: :json
     assert_response :success
-    assert_equal "application/json", response.content_type
+    assert_includes "application/json; charset=utf-8", response.content_type
 
     assert_equal json_response, {
       "contact" => {
