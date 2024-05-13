@@ -4,9 +4,17 @@ class CrmApiControllerTest < ActionController::TestCase
   include FactoryBot::Syntax::Methods
   include Benchmarker
 
+  fixtures :roles
+
   def setup
     Setting.rest_api_enabled = "1"
+    project = create(:project)
+    @contact = create(:contact, project: project)
+
     @user = create(:user)
+    @user.memberships.create(project: project)
+    @user.memberships.last.roles << Role.find_or_create_by(name: "3CX API User", permissions: [:use_api])
+    @user.memberships.last.save!
     @api_key = @user.api_key
     @contact = create(:contact)
     @expected_contact_response = {
@@ -64,13 +72,11 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_show_invalid_credentials
-    set_api_header("Invalid")
-    get_show_page
-    assert_response :forbidden
+    get_show_page(api_key: "Invalid")
+    assert_response :unauthorized
   end
 
   def test_show
-    set_api_header
     get_show_page
     assert_response :success
     assert_includes "application/json; charset=utf-8", response.content_type
@@ -86,14 +92,13 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_show_not_found
-    get :show, params: {phone: "not-found"}, format: :json
+    get_show_page(phone: "Nonexistent")
     assert_response :not_found
     assert_equal response.body, {error: "Not found"}.to_json
   end
 
   def test_performance
     benchmark("Render show page", percentile: 95, max_time_ms: 100, runs: 1000) do
-      set_api_header
       get_show_page
       assert_response :success
     end
@@ -101,12 +106,9 @@ class CrmApiControllerTest < ActionController::TestCase
 
   private
 
-  def get_show_page
-    post :show, params: {phone: @contact.phone}, format: :json
-  end
-
-  def set_api_header(api_key = @api_key)
-    headers = {"X-Redmine-API-Key" => api_key}
+  def get_show_page(phone: @contact.phone, api_key: @api_key)
+    headers = {"HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(api_key, "empty")}
     @request.headers.merge! headers
+    get :show, params: {phone: phone}, format: :json
   end
 end

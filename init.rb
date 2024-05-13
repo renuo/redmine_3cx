@@ -22,5 +22,7 @@ Redmine::Plugin.register :redmine_3cx do
   end
   settings default: {"empty" => true}, partial: "settings/poll_settings"
   author_url "http://example.com/about"
-  permission :show_crm_api, crm_api: :show
+  project_module :contacts do
+    permission :use_api, {crm_api: :show}, read: true
+  end
 end
