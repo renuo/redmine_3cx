@@ -12,5 +12,25 @@
         <%= link_to "Generate XML", redmine_3cx_template_path %>
       </td>
     </tr>
+    <tr>
+      <th>Plugin Compatability</th>
+      <td>
+        <% compatible =
+          if defined?(Contact)
+            contact = Contact.new
+            contact.respond_to?(:first_name) && contact.respond_to?(:last_name) && contact.respond_to?(:phone) && contact.respond_to?(:company)
+          else
+            false
+          end
+        %>
+
+      <% if compatible %>
+        Plugin is compatible with Redmine Contacts
+      <% else %>
+        Plugin is not compatible with Redmine Contacts.
+        Please follow the plugin instructions in the plugin <%= link_to "README.md","https://github.com/renuo/redmine_3cx/blob/develop/README.rdoc" %>.
+      <% end %>
+      </td>
+    </tr>
   </tbody>
 </table>
