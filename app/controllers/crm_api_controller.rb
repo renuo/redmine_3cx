@@ -1,5 +1,5 @@
 class CrmApiController < ApplicationController
-  before_action :find_user, only: [:show]
+  before_action :validate_params, :find_user, only: [:show]
 
   def show
     render json: {contact: {
@@ -11,6 +11,12 @@ class CrmApiController < ApplicationController
   end
 
   private
+
+  def validate_params
+    if params[:phone].nil?
+      render json: {error: "Phone number is missing"}, status: :bad_request
+    end
+  end
 
   def find_user
     @contact = Contact.find_by(phone: params[:phone])

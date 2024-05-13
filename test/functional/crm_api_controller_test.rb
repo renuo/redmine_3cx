@@ -23,6 +23,13 @@ class CrmApiControllerTest < ActionController::TestCase
     }.to_json
   end
 
+  def test_show_param_not_present
+    get :show, format: :json
+
+    assert_response :bad_request
+    assert_equal response.body, {error: "Phone number is missing"}.to_json
+  end
+
   def test_show_not_found
     get :show, params: {phone: "not-found"}, format: :json
     assert_response :not_found
