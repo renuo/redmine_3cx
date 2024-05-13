@@ -14,7 +14,7 @@ class CrmApiController < ApplicationController
 
   def validate_params
     if params[:phone].nil?
-      render json: {error: "Phone number is missing"}, status: :bad_request
+      render json: {error: "Phone number is missing!"}, status: :bad_request
     end
   end
 
@@ -22,7 +22,7 @@ class CrmApiController < ApplicationController
     @contact = Contact.find_by(phone: params[:phone])
 
     if @contact.nil?
-      render json: {error: "Not found"}, status: :not_found
+      render json: {error: "Not found!"}, status: :not_found
     end
   end
 end
