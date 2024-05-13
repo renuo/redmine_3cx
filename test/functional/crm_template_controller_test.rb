@@ -16,4 +16,3 @@ class CrmTemplateControllerTest < ActionController::TestCase
     assert_includes response.body, '<Scenario Id="CreateContactRecord" Type="REST">'
   end
 end
-
