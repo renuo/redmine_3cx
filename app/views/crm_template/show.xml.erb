@@ -15,9 +15,8 @@
   </Authentication>
   <Scenarios>
     <Scenario Type="REST">
-      <Request Url="https://[Domain]/3cx/contacts.json?phone:[[Number].Replace(&quot;+&quot;,&quot;%2B&quot;)]" MessagePasses="0" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
-        <Headers>
-        </Headers>
+      <Request Url="https://[Domain]/3cx/contacts.json?phone:[[Number].Replace(\&quot;+\&quot;,\&quot;%2B\&quot;)]" MessagePasses="0" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
+        <Headers></Headers>
       </Request>
       <Variables>
         <Variable Name="Id">users.id<Filter /></Variable>
