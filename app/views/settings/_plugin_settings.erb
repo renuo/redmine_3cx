@@ -3,13 +3,23 @@
     <tr>
       <th>Active</th>
       <td>
-         <%= check_box_tag "settings[active]", true, @settings[:active] %>
+        <%= check_box_tag "settings[active]", true, @settings[:active] %>
       </td>
     </tr>
     <tr>
       <th>Template</th>
       <td>
         <%= link_to "Generate XML", redmine_3cx_template_path %>
+      </td>
+    </tr>
+    <tr>
+      <th>Plugin Installation</th>
+      <td>
+        <% if Redmine::Plugin.installed?("redmine_contacts") %>
+          Redmine Contacts is installed.
+        <% else %>
+          Redmine Contacts is not installed. Please follow the Redmine Contacts installation instructions.
+        <% end %>
       </td>
     </tr>
     <tr>
