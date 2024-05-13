@@ -5,9 +5,11 @@
       <td>
          <%= check_box_tag "settings[active]", true, @settings[:active] %>
       </td>
+    </tr>
+    <tr>
       <th>Template</th>
       <td>
-        <%= link_to "Generate Template", redmine_3cx_template_path %>
+        <%= link_to "Generate XML", redmine_3cx_template_path %>
       </td>
     </tr>
   </tbody>
