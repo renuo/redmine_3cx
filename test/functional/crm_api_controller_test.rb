@@ -63,12 +63,14 @@ class CrmApiControllerTest < ActionController::TestCase
     @contact = create(:contact)
   end
 
-  def test_show_unauthorized
-    get :show, params: {phone: "1234567890"}, format: :json
+  def test_show_invalid_credentials
+    set_api_header("Invalid")
+    get_show_page
     assert_response :forbidden
   end
 
   def test_show
+    set_api_header
     get_show_page
     assert_response :success
     assert_includes "application/json; charset=utf-8", response.content_type
@@ -91,6 +93,7 @@ class CrmApiControllerTest < ActionController::TestCase
 
   def test_performance
     benchmark("Render show page", percentile: 95, max_time_ms: 100, runs: 1000) do
+      set_api_header
       get_show_page
       assert_response :success
     end
@@ -99,8 +102,11 @@ class CrmApiControllerTest < ActionController::TestCase
   private
 
   def get_show_page
-    headers = {"X-Redmine-API-Key" => @api_key}
+    post :show, params: {phone: @contact.phone}, format: :json
+  end
+
+  def set_api_header(api_key = @api_key)
+    headers = {"X-Redmine-API-Key" => api_key}
     @request.headers.merge! headers
-    get :show, params: {phone: @contact.phone}, format: :json
   end
 end

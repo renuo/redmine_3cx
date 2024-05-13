@@ -1,4 +1,7 @@
 class CrmApiController < ApplicationController
+  before_action :authorize_global, only: [:show]
+  before_action :find_contact, only: [:show]
+  accept_api_auth :show
   before_action :validate_params, :find_users, only: [:index]
 
   def index
