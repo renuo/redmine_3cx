@@ -23,7 +23,7 @@
       </td>
     </tr>
     <tr>
-      <th>Plugin Compatability</th>
+      <th>Compatability</th>
       <td>
         <% compatible =
           if defined?(Contact)
@@ -35,7 +35,7 @@
         %>
 
       <% if compatible %>
-        Plugin is compatible with Redmine Contacts
+        Plugin is compatible with Redmine Contacts.
       <% else %>
         Plugin is not compatible with Redmine Contacts.
         Please follow the plugin instructions in the plugin <%= link_to "README.md","https://github.com/renuo/redmine_3cx/blob/develop/README.rdoc" %>.
