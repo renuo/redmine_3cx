@@ -6,14 +6,7 @@ class CrmApiControllerTest < ActionController::TestCase
 
   def setup
     @contact = create(:contact)
-  end
-
-  def test_show
-    get_contact
-    assert_response :success
-    assert_includes "application/json; charset=utf-8", response.content_type
-
-    assert_equal response.body, {
+    @expected_contact_response = {
       "contact" => {
         "firstname" => "John",
         "lastname" => "Doe",
@@ -23,29 +16,37 @@ class CrmApiControllerTest < ActionController::TestCase
     }.to_json
   end
 
-  def test_show_param_not_present
-    get_contact(phone: nil)
+  def test_show
+    assert_show_response(@contact.phone, :success, @expected_contact_response)
+  end
 
-    assert_response :bad_request
-    assert_equal response.body, {error: "Phone number is required!"}.to_json
+  def test_show_param_not_present
+    assert_show_response(nil, :bad_request, {error: "Phone number is required!"}.to_json)
   end
 
   def test_show_not_found
-    get_contact(phone: "Nonexistent")
-    assert_response :not_found
-    assert_equal response.body, {error: "Not found!"}.to_json
+    assert_show_response("Nonexistent", :not_found, {error: "Not found!"}.to_json)
   end
 
   def test_performance
-    benchmark("Render show page", percentile: 95, max_time_ms: 100, runs: 1000) do
-      get_contact
-      assert_response :success
-    end
+    benchmark("Render show page", percentile: 95, max_time_ms: 100, runs: 1000) { get_contact_assert_success }
   end
 
   private
 
-  def get_contact(params = {phone: @contact.phone})
-    get :show, params:, format: :json
+  def get_contact(phone)
+    get :show, params: {phone: phone}, format: :json
+  end
+
+  def assert_show_response(phone, status, expected_response)
+    get_contact(phone)
+    assert_response status
+    assert_includes "application/json; charset=utf-8", response.content_type
+    assert_equal expected_response, response.body
+  end
+
+  def get_contact_assert_success
+    get_contact(@contact.phone)
+    assert_response :success
   end
 end
