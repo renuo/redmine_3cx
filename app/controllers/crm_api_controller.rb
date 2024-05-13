@@ -8,6 +8,12 @@ class CrmApiController < ApplicationController
 
   private
 
+  def check_plugin_state
+    unless Setting[:plugin_redmine_3cx][:active]
+      render json: {error: "Plugin not active"}, status: :forbidden
+    end
+  end
+
   def validate_params
     if params[:phone].blank?
       render json: {error: "Phone number is required!"}, status: :bad_request
@@ -21,12 +27,6 @@ class CrmApiController < ApplicationController
       contact.phones.map { |phone| ContactSerializer.map_phone_number(phone) }.include?(phone_number)
     end.filter do |contact|
       User.current.allowed_to?(:use_api, contact.project)
-    end
-  end
-
-  def check_plugin_state
-    unless Setting[:plugin_redmine_3cx][:active]
-      render json: {error: "Plugin not active"}, status: :forbidden
     end
   end
 end
