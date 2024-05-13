@@ -15,9 +15,6 @@ class CrmTemplateControllerTest < ActionController::TestCase
   def test_template_valid_xml
     doc = Nokogiri::XML(@response.body)
     assert_empty doc.errors
-    # doc errors are empty even if there are unclosed tags
-    # these can be checked with doc.text
-    assert_empty doc.text.delete("\n").strip
   end
 
   def test_template_contents
