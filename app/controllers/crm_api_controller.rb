@@ -13,8 +13,8 @@ class CrmApiController < ApplicationController
   private
 
   def validate_params
-    if params[:phone].nil?
-      render json: {error: "Phone number is missing!"}, status: :bad_request
+    if params[:phone].blank?
+      render json: {error: "Phone number is required!"}, status: :bad_request
     end
   end
 

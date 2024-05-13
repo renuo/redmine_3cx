@@ -9,7 +9,7 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get_show_page
+    get_contact
     assert_response :success
     assert_includes "application/json; charset=utf-8", response.content_type
 
@@ -24,28 +24,28 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_show_param_not_present
-    get :show, format: :json
+    get_contact(phone: nil)
 
     assert_response :bad_request
-    assert_equal response.body, {error: "Phone number is missing!"}.to_json
+    assert_equal response.body, {error: "Phone number is required!"}.to_json
   end
 
   def test_show_not_found
-    get :show, params: {phone: "not-found"}, format: :json
+    get_contact(phone: "Nonexistent")
     assert_response :not_found
     assert_equal response.body, {error: "Not found!"}.to_json
   end
 
   def test_performance
     benchmark("Render show page", percentile: 95, max_time_ms: 100, runs: 1000) do
-      get_show_page
+      get_contact
       assert_response :success
     end
   end
 
   private
 
-  def get_show_page
-    get :show, params: {phone: @contact.phone}, format: :json
+  def get_contact(params = {phone: @contact.phone})
+    get :show, params:, format: :json
   end
 end
