@@ -2,12 +2,15 @@ class CrmApiController < ApplicationController
   before_action :validate_params, :find_user, only: [:show]
 
   def show
-    render json: {contact: {
+    render json: {contact: [{
+      id: @contact.id,
+      email: @contact.email,
       firstname: @contact.first_name,
       lastname: @contact.last_name,
       company: @contact.company,
-      phone: @contact.phone
-    }}
+      phone: @contact.phone,
+      url: contacts_url(phone: @contact.phone)
+    }]}
   end
 
   private
@@ -22,7 +25,7 @@ class CrmApiController < ApplicationController
     @contact = Contact.find_by(phone: params[:phone])
 
     if @contact.nil?
-      render json: {error: "Not found!"}, status: :not_found
+      render json: {contact: []}
     end
   end
 end
