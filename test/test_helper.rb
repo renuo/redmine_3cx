@@ -1,7 +1,6 @@
 # Load the Redmine helper
 require "simplecov"
 SimpleCov.start do
-  add_filter "/test/"
   add_filter do |source_file|
     source_file.filename !~ %r{/plugins/redmine_3cx/}
   end
