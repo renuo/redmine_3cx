@@ -17,34 +17,34 @@ class CrmApiControllerTest < ActionController::TestCase
     }.to_json
   end
 
-  def test_show
-    assert_show_response(@contact.phone, :success, @expected_contact_response)
+  def test_index
+    assert_index_response(@contact.phone, :success, @expected_contact_response)
   end
 
-  def test_show_alternate_phone_format
-    assert_show_response("+41 (0) 78 123 45 67 ", :success, @expected_contact_response)
+  def test_index_alternate_phone_format
+    assert_index_response("+41 (0) 78 123 45 67 ", :success, @expected_contact_response)
   end
 
-  def test_show_param_not_present
-    assert_show_response(nil, :bad_request, {error: "Phone number is required!"}.to_json)
+  def test_index_param_not_present
+    assert_index_response(nil, :bad_request, {error: "Phone number is required!"}.to_json)
   end
 
-  def test_show_not_found
-    assert_show_response("Nonexistent", :success, {contacts: []}.to_json)
+  def test_index_not_found
+    assert_index_response("Nonexistent", :success, {contacts: []}.to_json)
   end
 
   def test_performance
     create_list(:contact, 200, phone: "other")
-    benchmark("Render show page", percentile: 95, max_time_ms: 100, runs: 1000) { get_contact_assert_success }
+    benchmark("CrmApiController#index", percentile: 95, max_time_ms: 100, runs: 1000) { get_contact_assert_success }
   end
 
   private
 
   def get_contact(phone)
-    get :show, params: {phone: phone}, format: :json
+    get :index, params: {phone: phone}, format: :json
   end
 
-  def assert_show_response(phone, status, expected_response)
+  def assert_index_response(phone, status, expected_response)
     get_contact(phone)
     assert_response status
     assert_includes "application/json; charset=utf-8", response.content_type
