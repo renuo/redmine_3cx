@@ -15,10 +15,9 @@ class ContactSerializer
     end
 
     def map_phone_numbers_to_keys(phone_numbers)
-      PHONE_NUMBER_KEYS.each_with_index.each_with_object({}) do |(key, index), hash|
-        return hash unless phone_numbers[index]
-
-        return hash.merge(key => map_phone_number(phone_numbers[index]))
+      PHONE_NUMBER_KEYS.each_with_index.with_object({}) do |(key, index), result|
+        phone_number = phone_numbers[index]
+        result[key] = map_phone_number(phone_number) if phone_number
       end
     end
 
