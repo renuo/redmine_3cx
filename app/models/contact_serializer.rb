@@ -1,5 +1,7 @@
 class ContactSerializer
   class << self
+    PHONE_NUMBER_KEYS = [:phone_business, :phone_business2, :phone_home, :phone_home2, :phone_mobile, :phone_mobile2, :phone_other]
+
     def call(contact)
       contact_hash = {
         id: contact.id,
@@ -8,17 +10,20 @@ class ContactSerializer
         company: contact.company
       }
 
-      phone_keys = [:phone_business, :phone_business2, :phone_home, :phone_home2, :phone_mobile, :phone_mobile2, :phone_other]
-
-      contact.phones.each_with_index do |phone, index|
-        contact_hash[phone_keys[index]] = map_phone_number(phone)
-      end
-
-      contact_hash
+      phone_numbers = map_phone_numbers_to_keys(contact.phones)
+      contact_hash.merge(phone_numbers)
     end
 
-    def map_phone_number(phone)
-      phone.gsub(/^[+0]41/, "").gsub(/\D/, "").rjust(10, "0")
+    def map_phone_numbers_to_keys(phone_numbers)
+      PHONE_NUMBER_KEYS.each_with_index.each_with_object({}) do |(key, index), hash|
+        return hash unless phone_numbers[index]
+
+        return hash.merge(key => map_phone_number(phone_numbers[index]))
+      end
+    end
+
+    def map_phone_number(phone_number)
+      phone_number.gsub(/^[+0]41/, "").gsub(/\D/, "").rjust(10, "0")
     end
   end
 end
