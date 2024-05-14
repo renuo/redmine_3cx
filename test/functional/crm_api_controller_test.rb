@@ -9,6 +9,7 @@ class CrmApiControllerTest < ActionController::TestCase
   def setup
     Setting.rest_api_enabled = "1"
     project = create(:project)
+    project.enable_module! :contacts
 
     @user = create(:user)
     @user.memberships.create(project: project)
@@ -50,6 +51,17 @@ class CrmApiControllerTest < ActionController::TestCase
     benchmark("CrmApiController#index", percentile: 95, max_time_ms: 100, runs: 1000) { get_contact_assert_success }
   end
 
+  def test_index_invalid_credentials
+    assert_index_response(@contact.phone, :unauthorized, {error: "Invalid API key"}.to_json, api_key: "Invalid")
+  end
+
+  def test_index_non_project_member
+    other_project = create(:project)
+    other_contact = create(:contact, phone: "0123456789", project: other_project)
+
+    assert_index_response(other_contact.phone, :success, {contacts: []}.to_json)
+  end
+
   private
 
   def get_contact_assert_success
@@ -67,9 +79,5 @@ class CrmApiControllerTest < ActionController::TestCase
     headers = {"HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(@user.login, "password")}
     @request.headers.merge! headers
     get :index, params: {phone: phone}, format: :json
-  end
-
-  def test_show_invalid_credentials
-    assert_index_response(nil, :unauthorized, {error: "Invalid API key"}.to_json, api_key: "Invalid")
   end
 end

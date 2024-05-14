@@ -19,6 +19,8 @@ class CrmApiController < ApplicationController
 
     @contacts = Contact.all.filter do |contact|
       contact.phones.map { |phone| ContactSerializer.map_phone_number(phone) }.include?(phone_number)
+    end.filter do |contact|
+      User.current.allowed_to?(:use_api, contact.project)
     end
   end
 end
