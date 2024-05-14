@@ -1,4 +1,7 @@
 # Plugin's routes
 # See: http://guides.rubyonrails.org/routing.html
 
-get "3cx/contacts", to: "crm_api#show", defaults: {format: "json"}
+scope "3cx" do
+  get "contacts", to: "crm_api#index", defaults: {format: "json"}
+  get "template", to: "crm_template#show", defaults: {format: "xml"}
+end

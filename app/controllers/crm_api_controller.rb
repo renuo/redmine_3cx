@@ -1,13 +1,8 @@
 class CrmApiController < ApplicationController
-  before_action :validate_params, :find_user, only: [:show]
+  before_action :validate_params, :find_users, only: [:index]
 
-  def show
-    render json: {contact: {
-      firstname: @contact.first_name,
-      lastname: @contact.last_name,
-      company: @contact.company,
-      phone: @contact.phone
-    }}
+  def index
+    render json: {contacts: @contacts.map { |c| ContactSerializer.call(c) }}
   end
 
   private
@@ -18,11 +13,11 @@ class CrmApiController < ApplicationController
     end
   end
 
-  def find_user
-    @contact = Contact.find_by(phone: params[:phone])
+  def find_users
+    phone_number = ContactSerializer.map_phone_number(params[:phone])
 
-    if @contact.nil?
-      render json: {error: "Not found!"}, status: :not_found
+    @contacts = Contact.all.filter do |contact|
+      contact.phones.map { |phone| ContactSerializer.map_phone_number(phone) }.include?(phone_number)
     end
   end
 end

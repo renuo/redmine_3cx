@@ -8,6 +8,7 @@ group :development, :test do
     gem 'factory_bot'
   end
   gem 'brakeman'
+  gem 'rails-controller-testing'
   gem 'benchmark'
 end
 
