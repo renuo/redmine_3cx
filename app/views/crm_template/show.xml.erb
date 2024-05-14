@@ -18,13 +18,16 @@
         <Variable Name="FirstName" Path="contacts.firstname"><Filter /></Variable>
         <Variable Name="LastName" Path="contacts.lastname"><Filter /></Variable>
         <Variable Name="Company" Path="contacts.company"><Filter /></Variable>
-        <Variable Name="PhoneBusiness" Path="contacts.phone"><Filter /></Variable>
+        <Variable Name="Phone1" Path="contacts.phone"><Filter /></Variable>
+        <Variable Name="Phone2" Path="contacts.phone1"><Filter /></Variable>
+        <Variable Name="Phone3" Path="contacts.phone2"><Filter /></Variable>
         </Variables>
         <Outputs AllowEmpty="false">
           <Output Type="ContactID" Passes="0" Value="[ContactID]" />
           <Output Type="FirstName" Passes="0" Value="[FirstName]" />
           <Output Type="LastName" Passes="0" Value="[LastName]" />
-          <Output Type="PhoneBusiness" Passes="0" Value="[PhoneBusiness]" />
+          <Output Type="PhoneBusiness" Passes="0" Value="[Phone1]" />
+          <Output Type="PhoneBusiness2" Passes="0" Value="[Phone2]" />
           <Output Type="EntityId" Passes="0" Value="[ContactID]" />
           <Output Type="EntityType" Passes="0" Value="Contacts" />
           <Output Type="ContactUrl" Passes="0" Value="https://[Domain]/contacts/[ContactID]" />

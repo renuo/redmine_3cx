@@ -8,14 +8,16 @@ class CrmApiController < ApplicationController
   private
 
   def map_contact(contact)
+    phones = contact.phones.map { |p| map_phone_number(p) }
+
     {
       id: contact.id,
-      email: contact.email,
       firstname: contact.first_name,
       lastname: contact.last_name,
       company: contact.company,
-      phone: contact.phone,
-      url: contacts_url(phone: contact.phone)
+      phone: phones[0],
+      phone1: phones[1],
+      phone2: phones[2]
     }
   end
 
