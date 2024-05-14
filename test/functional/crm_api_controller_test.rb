@@ -12,9 +12,13 @@ class CrmApiControllerTest < ActionController::TestCase
         "firstname" => "John",
         "lastname" => "Doe",
         "company" => "Example AG",
-        "phone" => "0781234567",
-        "phone1" => nil,
-        "phone2" => nil
+        "phone_business" => "0781234567",
+        "phone_business2" => nil,
+        "phone_home" => nil,
+        "phone_home2" => nil,
+        "phone_mobile" => nil,
+        "phone_mobile2" => nil,
+        "phone_other" => nil
       }]
     }.to_json
   end

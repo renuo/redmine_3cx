@@ -15,9 +15,13 @@ class CrmApiController < ApplicationController
       firstname: contact.first_name,
       lastname: contact.last_name,
       company: contact.company,
-      phone: phones[0],
-      phone1: phones[1],
-      phone2: phones[2]
+      phone_business: phones[0],
+      phone_business2: phones[1],
+      phone_home: phones[2],
+      phone_home2: phones[3],
+      phone_mobile: phones[4],
+      phone_mobile2: phones[5],
+      phone_other: phones[6]
     }
   end
 
