@@ -22,7 +22,7 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_show_alternate_phone_format
-    assert_show_response("0781234567", :success, @expected_contact_response)
+    assert_show_response("+41 (0) 78 123 45 67 ", :success, @expected_contact_response)
   end
 
   def test_show_param_not_present
