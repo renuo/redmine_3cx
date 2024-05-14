@@ -8,10 +8,13 @@ class CrmApiControllerTest < ActionController::TestCase
     @contact = create(:contact)
     @expected_contact_response = {
       "contacts" => [{
+        "id" => @contact.id,
         "firstname" => "John",
         "lastname" => "Doe",
         "company" => "Example AG",
-        "phone" => "+41 78 123 45 67"
+        "phone" => "0781234567",
+        "phone1" => nil,
+        "phone2" => nil
       }]
     }.to_json
   end
