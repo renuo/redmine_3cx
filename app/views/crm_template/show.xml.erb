@@ -12,24 +12,32 @@
         <Rule Type="Any">contacts.id</Rule>
       </Rules>
       <Variables>
-        <Variable Name="ContactID" Path="contacts.id"><Filter /></Variable>
+        <Variable Name="ContactId" Path="contacts.id"><Filter /></Variable>
         <Variable Name="FirstName" Path="contacts.firstname"><Filter /></Variable>
         <Variable Name="LastName" Path="contacts.lastname"><Filter /></Variable>
         <Variable Name="Company" Path="contacts.company"><Filter /></Variable>
-        <Variable Name="Phone1" Path="contacts.phone"><Filter /></Variable>
-        <Variable Name="Phone2" Path="contacts.phone1"><Filter /></Variable>
-        <Variable Name="Phone3" Path="contacts.phone2"><Filter /></Variable>
-        </Variables>
-        <Outputs AllowEmpty="false">
-          <Output Type="ContactID" Passes="0" Value="[ContactID]" />
-          <Output Type="FirstName" Passes="0" Value="[FirstName]" />
-          <Output Type="LastName" Passes="0" Value="[LastName]" />
-          <Output Type="PhoneBusiness" Passes="0" Value="[Phone1]" />
-          <Output Type="PhoneBusiness2" Passes="0" Value="[Phone2]" />
-          <Output Type="EntityId" Passes="0" Value="[ContactID]" />
-          <Output Type="EntityType" Passes="0" Value="Contacts" />
-          <Output Type="ContactUrl" Passes="0" Value="https://[Domain]/contacts/[ContactID]" />
-        </Outputs>
+        <Variable Name="PhoneBusiness" Path="contacts.phone_business"><Filter /></Variable>
+        <Variable Name="PhoneBusiness2" Path="contacts.phone_business2"><Filter /></Variable>
+        <Variable Name="PhoneHome" Path="contacts.phone_home"><Filter /></Variable>
+        <Variable Name="PhoneHome2" Path="contacts.phone_home2"><Filter /></Variable>
+        <Variable Name="PhoneMobile" Path="contacts.phone_mobile"><Filter /></Variable>
+        <Variable Name="PhoneMobile2" Path="contacts.phone_mobile2"><Filter /></Variable>
+        <Variable Name="PhoneOther" Path="contacts.phone_other"><Filter /></Variable>
+      </Variables>
+      <Outputs AllowEmpty="false">
+        <Output Type="FirstName" Passes="0" Value="[FirstName]" />
+        <Output Type="LastName" Passes="0" Value="[LastName]" />
+        <Output Type="PhoneBusiness" Passes="0" Value="[PhoneBusiness]" />
+        <Output Type="PhoneBusiness2" Passes="0" Value="[PhoneBusiness2]" />
+        <Output Type="PhoneHome" Passes="0" Value="[PhoneHome]" />
+        <Output Type="PhoneHome2" Passes="0" Value="[PhoneHome2]" />
+        <Output Type="PhoneMobile" Passes="0" Value="[PhoneMobile]" />
+        <Output Type="PhoneMobile2" Passes="0" Value="[PhoneMobile2]" />
+        <Output Type="PhoneOther" Passes="0" Value="[PhoneOther]" />
+        <Output Type="EntityId" Passes="0" Value="[ContactId]" />
+        <Output Type="EntityType" Passes="0" Value="Contacts" />
+        <Output Type="ContactUrl" Passes="0" Value="https://[Domain]/contacts/[ContactID]" />
+      </Outputs>
     </Scenario>
   </Scenarios>
 </Crm>

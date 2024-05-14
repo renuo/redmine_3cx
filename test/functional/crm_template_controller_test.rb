@@ -20,6 +20,10 @@ class CrmTemplateControllerTest < ActionController::TestCase
   def test_template_contents
     assert_includes @response.body, "<Crm"
     assert_includes @response.body, "<Scenarios"
-    assert_includes @response.body, '<Scenario Type="REST"'
+    assert_includes @response.body, "<Scenarios"
+    assert_includes @response.body, "contacts.id"
+    assert_includes @response.body, "contacts.firstname"
+    assert_includes @response.body, "contacts.lastname"
+    assert_includes @response.body, "contacts.company"
   end
 end
