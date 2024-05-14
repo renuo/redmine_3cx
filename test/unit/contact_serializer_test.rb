@@ -33,6 +33,11 @@ class ContactSerializerTest < ActiveSupport::TestCase
     assert_equal(expected, ContactSerializer.call(@contact))
   end
 
+  def test_call_without_phones
+    @contact.phones = []
+    assert_equal [:id, :firstname, :lastname, :company], ContactSerializer.call(@contact).keys
+  end
+
   def test_phones
     @phones.each do |expected, phone_number|
       assert_equal(expected, ContactSerializer.map_phone_number(phone_number))
