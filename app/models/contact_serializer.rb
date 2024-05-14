@@ -23,7 +23,7 @@ class ContactSerializer
     end
 
     def map_phone_number(phone_number)
-      phone_number.gsub(/^[+0]41/, "").gsub(/\D/, "").rjust(10, "0")
+      phone_number.gsub(/[^+0-9]/, "").gsub(/^[+0]41/, "").rjust(10, "0")
     end
   end
 end
