@@ -9,6 +9,6 @@ FactoryBot.define do
     first_name { "John" }
     last_name { "Doe" }
     company { "Example AG" }
-    phone { "1234567890" }
+    phone { "+41 78 123 45 67" }
   end
 end

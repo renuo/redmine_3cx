@@ -2,18 +2,26 @@ class CrmApiController < ApplicationController
   before_action :validate_params, :find_user, only: [:show]
 
   def show
-    render json: {contact: [{
-      id: @contact.id,
-      email: @contact.email,
-      firstname: @contact.first_name,
-      lastname: @contact.last_name,
-      company: @contact.company,
-      phone: @contact.phone,
-      url: contacts_url(phone: @contact.phone)
-    }]}
+    render json: {contacts: @contacts.map { |contact| map_contact(contact) }}
   end
 
   private
+
+  def map_contact(contact)
+    {
+      id: contact.id,
+      email: contact.email,
+      firstname: contact.first_name,
+      lastname: contact.last_name,
+      company: contact.company,
+      phone: contact.phone,
+      url: contacts_url(phone: contact.phone)
+    }
+  end
+
+  def map_phone_number(phone)
+    phone.gsub(/^[+0]41/, "").gsub(/\D/, "").rjust(10, "0")
+  end
 
   def validate_params
     if params[:phone].blank?
@@ -22,10 +30,8 @@ class CrmApiController < ApplicationController
   end
 
   def find_user
-    @contact = Contact.find_by(phone: params[:phone])
-
-    if @contact.nil?
-      render json: {contact: []}
+    @contacts = Contact.all.filter do |contact|
+      contact.phones.map { |phone| map_phone_number(phone) }.include?(map_phone_number(params[:phone]))
     end
   end
 end

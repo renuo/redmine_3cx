@@ -1,4 +1,4 @@
-<Crm xmlns:xsi="http://www.w2.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Country="CH" Name="Redmine2" Version="2" SupportsEmojis="false">
+<Crm xmlns:xsi="http://www.w2.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Country="CH" Name="Redmine" Version="2" SupportsEmojis="false">
   <Connection MaxConcurrentRequests="8" />
   <Parameters>
     <Parameter Name="Email" Type="String" Parent="General Configuration" Editor="String" Title="Email:" />
@@ -11,16 +11,16 @@
       <Request Url="https://[Domain]/3cx/contacts.json?phone=[[Number]]" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
       </Request>
       <Rules>
-        <Rule Type="Any">contact.id</Rule>
+        <Rule Type="Any">contacts.id</Rule>
       </Rules>
       <Variables>
-        <Variable Name="ContactID" Path="contact.id"><Filter /></Variable>
-        <Variable Name="FirstName" Path="contact.firstname"><Filter /></Variable>
-        <Variable Name="Email" Path="contact.email"><Filter /></Variable>
-        <Variable Name="LastName" Path="contact.lastname"><Filter /></Variable>
-        <Variable Name="Company" Path="contact.company"><Filter /></Variable>
-        <Variable Name="PhoneBusiness" Path="contact.phone"><Filter /></Variable>
-        <Variable Name="Url" Path="contact.url"><Filter /></Variable>
+        <Variable Name="ContactID" Path="contacts.id"><Filter /></Variable>
+        <Variable Name="FirstName" Path="contacts.firstname"><Filter /></Variable>
+        <Variable Name="Email" Path="contacts.email"><Filter /></Variable>
+        <Variable Name="LastName" Path="contacts.lastname"><Filter /></Variable>
+        <Variable Name="Company" Path="contacts.company"><Filter /></Variable>
+        <Variable Name="PhoneBusiness" Path="contacts.phone"><Filter /></Variable>
+        <Variable Name="Url" Path="contacts.url"><Filter /></Variable>
         </Variables>
         <Outputs AllowEmpty="false">
           <Output Type="ContactID" Passes="0" Value="[ContactID]" />

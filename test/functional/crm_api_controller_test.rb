@@ -7,12 +7,12 @@ class CrmApiControllerTest < ActionController::TestCase
   def setup
     @contact = create(:contact)
     @expected_contact_response = {
-      "contact" => {
+      "contacts" => [{
         "firstname" => "John",
         "lastname" => "Doe",
         "company" => "Example AG",
-        "phone" => "1234567890"
-      }
+        "phone" => "+41 78 123 45 67"
+      }]
     }.to_json
   end
 
@@ -20,12 +20,16 @@ class CrmApiControllerTest < ActionController::TestCase
     assert_show_response(@contact.phone, :success, @expected_contact_response)
   end
 
+  def test_show_alternate_phone_format
+    assert_show_response("0781234567", :success, @expected_contact_response)
+  end
+
   def test_show_param_not_present
     assert_show_response(nil, :bad_request, {error: "Phone number is required!"}.to_json)
   end
 
   def test_show_not_found
-    assert_show_response("Nonexistent", :not_found, {error: "Not found!"}.to_json)
+    assert_show_response("Nonexistent", :success, {contacts: []}.to_json)
   end
 
   def test_performance
