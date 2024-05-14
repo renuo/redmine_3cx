@@ -8,7 +8,7 @@ class CrmApiControllerTest < ActionController::TestCase
 
   def setup
     Setting.rest_api_enabled = "1"
-    Setting[:plugin_redmine_3cx][:active] = true
+    Setting[:plugin_redmine_3cx] = {active: true}
     project = create(:project)
     project.enable_module! :contacts
 
@@ -36,8 +36,9 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_index_inactive
-    Setting[:plugin_redmine_3cx][:active] = false
+    Setting[:plugin_redmine_3cx] = {active: false}
     assert_index_response(@contact.phone, :forbidden, {error: "Plugin not active"}.to_json)
+    Setting[:plugin_redmine_3cx] = {active: true}
   end
 
   def test_index_alternate_phone_format
