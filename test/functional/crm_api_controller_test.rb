@@ -34,6 +34,7 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_performance
+    create_list(:contact, 200, phone: "other")
     benchmark("Render show page", percentile: 95, max_time_ms: 100, runs: 1000) { get_contact_assert_success }
   end
 
