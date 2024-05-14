@@ -1,9 +1,12 @@
 <Crm xmlns:xsi="http://www.w2.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Country="CH" Name="Redmine" Version="2" SupportsEmojis="false">
   <Connection MaxConcurrentRequests="8" />
   <Parameters>
+    <Parameter Name="ApiKey" Type="String" Parent="General Configuration" Editor="String" Title="ApiKey:" />
     <Parameter Name="Domain" Type="String" Parent="General Configuration" Editor="String" Title="Domain:" />
   </Parameters>
-  <Authentication Type="No" />
+  <Authentication Type="Basic">
+    <Value>[ApiKey]:x</Value>
+  </Authentication>
   <Scenarios>
     <Scenario Type="REST" EntityId="Contacts">
       <Request Url="https://[Domain]/3cx/contacts.json?phone=[[Number]]" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
