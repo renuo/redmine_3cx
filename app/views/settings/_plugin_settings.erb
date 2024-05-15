@@ -18,20 +18,22 @@ Follow the 3CX Setup guide in the <%= link_to "README.md", "https://github.com/r
 <table>
   <tbody>
     <tr>
-      <th>Redmine Contacts</th>
+      <th style="text-align: left;">Redmine Contacts</th>
       <td>
         <% if Redmine::Plugin.installed?("redmine_contacts") %>
           <span class="icon found icon-ok"></span>
           Redmine Contacts is installed.
         <% else %>
           <span class="icon found icon-warning"></span>
-          Redmine Contacts is not installed. Please make sure that the plugin is installed.
+          Redmine Contacts is not installed.
+          <em>Make sure to install it from
+            <%= link_to "RedmineUp", "https://www.redmineup.com/pages/plugins/crm?utm_source=redmine.org&utm_medium=referral&utm_term=RedmineOrg-CRM&utm_campaign=RedmineOrg-CRM-GetPlugin" %></em>.
         <% end %>
       </td>
     </tr>
     <tr>
     <tr>
-      <th>Rest API</th>
+      <th style="text-align: left;">Rest API</th>
       <td>
         <% if Setting.rest_api_enabled? %>
           <span class="icon found icon-ok"></span>
@@ -43,7 +45,7 @@ Follow the 3CX Setup guide in the <%= link_to "README.md", "https://github.com/r
       </td>
     </tr>
     <tr>
-      <th>Compatability</th>
+      <th style="text-align: left;">Compatability</th>
       <td>
         <% compatible =
           if defined?(Contact)
@@ -62,7 +64,9 @@ Follow the 3CX Setup guide in the <%= link_to "README.md", "https://github.com/r
           <span class="icon found icon-warning"></span>
           Plugin is not compatible with Redmine Contacts.
           Please make sure that the migrations have been run and that the a modern version has been installed.
-          Versions other than 4.4.1 Light and 4.4.0 Pro have not been tested and the integration might not work.
+          <em>
+            Versions other than 4.4.1 Light and 4.4.0 Pro have not been tested and the integration might not work.
+          </em>
         <% end %>
       </td>
     </tr>
