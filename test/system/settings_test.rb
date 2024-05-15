@@ -35,8 +35,9 @@ class SettingsTest < ApplicationSystemTestCase
     Setting.stub :rest_api_enabled?, false do
       visit_settings_page
       assert page.has_content?("Please active API authentication")
-      click_on "Settings"
-      assert_equal "settings/?tab=api", current_path
+      click_on "API Settings"
+      assert_equal "/settings", current_path
+      assert page.has_content?("Enable REST web service")
     end
   end
 
@@ -46,13 +47,13 @@ class SettingsTest < ApplicationSystemTestCase
     visit_settings_page
 
     assert_active_state(true)
-    check "settings[active]"
+    uncheck "settings[active]"
     click_on "Apply"
-    assert_active_state(false)
+    assert_active_state(nil)
   end
 
   def assert_active_state(state)
-    Setting.clear_cache!
+    Setting.clear_cache
     assert_equal state, Setting.plugin_redmine_3cx[:active]
   end
 
