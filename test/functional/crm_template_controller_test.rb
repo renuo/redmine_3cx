@@ -3,12 +3,12 @@ require "nokogiri"
 
 class CrmTemplateControllerTest < ActionController::TestCase
   def setup
-    get :show, format: :xml
+    get :template, format: :xml
   end
 
   def test_template_response
     assert_includes @response.content_type, "application/xml"
-    assert_template "crm_template/show"
+    assert_template "crm_template/template"
     assert_response :success
   end
 

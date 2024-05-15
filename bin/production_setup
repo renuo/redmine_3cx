@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 cp -n .ruby-version ../../.ruby-version
 
+export RAILS_ENV=production
+
 # Install Dependencies
 BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
 cd ../..
 
-cp -n config/database.example.yml config/database.yml
-
-bundle exec rake db:create db:migrate db:seed
 bundle exec rake redmine:plugins:migrate
 bundle exec rake redmine_3cx:seed

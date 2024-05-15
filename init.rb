@@ -8,4 +8,5 @@ Redmine::Plugin.register :redmine_3cx do
   project_module :contacts do
     permission :use_api, {crm_api: :index}, read: true
   end
+  settings default: {active: false}, partial: "settings/plugin_settings"
 end

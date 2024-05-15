@@ -9,7 +9,7 @@
   </Authentication>
   <Scenarios>
     <Scenario Type="REST" EntityId="Contacts">
-      <Request Url="https://[Domain]/3cx/contacts.json?phone=[[Number]]" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
+      <Request Url="https://[Domain]/3cx/contacts.json?phone=[[Number].Replace(&quot;+&quot;,&quot;%2B&quot;)]" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json">
       </Request>
       <Rules>
         <Rule Type="Any">contacts.id</Rule>
@@ -30,6 +30,7 @@
       <Outputs AllowEmpty="false">
         <Output Type="FirstName" Passes="0" Value="[FirstName]" />
         <Output Type="LastName" Passes="0" Value="[LastName]" />
+        <Output Type="Company" Passes="0" Value="[Company]" />
         <Output Type="PhoneBusiness" Passes="0" Value="[PhoneBusiness]" />
         <Output Type="PhoneBusiness2" Passes="0" Value="[PhoneBusiness2]" />
         <Output Type="PhoneHome" Passes="0" Value="[PhoneHome]" />
