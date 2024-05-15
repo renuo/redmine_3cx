@@ -1,11 +1,22 @@
 <table>
   <tbody>
     <tr>
-      <th>Active</th>
+      <th>Active the 3CX integration</th>
       <td>
         <%= check_box_tag "settings[active]", true, @settings[:active] %>
       </td>
     </tr>
+  </tbody>
+</table>
+
+Follow the 3CX Setup guide in the <%= link_to "README.md", "https://github.com/renuo/redmine_3cx/blob/develop/README.rdoc" %> integrate this plugin your 3CX system.
+
+<br>
+<%= link_to "Download CRM Template", redmine_3cx_template_path %>
+<hr>
+
+<table>
+  <tbody>
     <tr>
       <th>Redmine Contacts</th>
       <td>
@@ -53,16 +64,6 @@
           Please make sure that the migrations have been run and that the a modern version has been installed.
           Versions other than 4.4.1 Light and 4.4.0 Pro have not been tested and the integration might not work.
         <% end %>
-      </td>
-    </tr>
-    <tr>
-      <th>3CX Setup</th>
-      <td><%= link_to "README.md", "https://github.com/renuo/redmine_3cx/blob/develop/README.rdoc" %></td>
-    </tr>
-    <tr>
-      <th>Template</th>
-      <td>
-        <%= link_to "Download XML", redmine_3cx_template_path %>
       </td>
     </tr>
   </tbody>
