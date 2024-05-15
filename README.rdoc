@@ -1,5 +1,15 @@
 = redmine_3cx
 
+== Production Setup
+
+  * Make sure that Redmine is installed
+  * Make sure that Redmine Contacts is installed
+
+  $ cd /path/to/redmine
+  $ git clone https://github.com/renuo/redmine_3cx plugins/redmine_3cx
+  $ cd plugins/redmine_3cx
+  $ bin/production_setup
+
 == Development Setup
 
   $ git clone -b 5.1-stable https://github.com/redmine/redmine
