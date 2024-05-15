@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 cp -n .ruby-version ../../.ruby-version
 
+export RAILS_ENV=production
+
 # Install Dependencies
 BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
 cd ../..
