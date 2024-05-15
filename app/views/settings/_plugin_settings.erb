@@ -7,18 +7,14 @@
       </td>
     </tr>
     <tr>
-      <th>Template</th>
-      <td>
-        <%= link_to "Download XML", redmine_3cx_template_path %>
-      </td>
-    </tr>
-    <tr>
       <th>Redmine Contacts</th>
       <td>
         <% if Redmine::Plugin.installed?("redmine_contacts") %>
+          <span class="icon found icon-ok"></span>
           Redmine Contacts is installed.
         <% else %>
-          ⚠️ Redmine Contacts is not installed. Please make sure that the plugin is installed.
+          <span class="icon found icon-warning"></span>
+          Redmine Contacts is not installed. Please make sure that the plugin is installed.
         <% end %>
       </td>
     </tr>
@@ -26,10 +22,12 @@
     <tr>
       <th>Rest API</th>
       <td>
-        <% if Setting.rest_api_enabled %>
+        <% if Setting.rest_api_enabled? %>
+          <span class="icon found icon-ok"></span>
           API authentication is active.
         <% else %>
-          ⚠️ Please active API authentication in <%= link_to "Settings", settings_path(tab: "api") %>.
+          <span class="icon found icon-warning"></span>
+          Please active API authentication in <%= link_to "Settings", settings_path(tab: "api") %>.
         <% end %>
       </td>
     </tr>
@@ -47,11 +45,24 @@
         %>
 
         <% if compatible %>
+          <span class="icon found icon-ok"></span>
           Plugin is compatible with Redmine Contacts.
         <% else %>
-          ⚠️ Plugin is not compatible with Redmine Contacts.
-          Please make sure that the migrations have been run and that the correct version has been installed.
+          <span class="icon found icon-warning"></span>
+          Plugin is not compatible with Redmine Contacts.
+          Please make sure that the migrations have been run and that the a modern version has been installed.
+          Versions other than 4.4.1 Light and 4.4.0 Pro have not been tested and the integration might not work.
         <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>3CX Setup</th>
+      <td><%= link_to "README.md", "https://github.com/renuo/redmine_3cx/blob/develop/README.rdoc" %></td>
+    </tr>
+    <tr>
+      <th>Template</th>
+      <td>
+        <%= link_to "Download XML", redmine_3cx_template_path %>
       </td>
     </tr>
   </tbody>
