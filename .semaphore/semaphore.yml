@@ -34,6 +34,7 @@ blocks:
           commands:
             - sem-version ruby $RUBY_VERSION -f
             - checkout --use-cache
+            - bin/fastcheck || true
             - bin/fastcheck
 
   - name: Redmine 5
