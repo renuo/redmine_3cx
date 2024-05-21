@@ -4,7 +4,6 @@ set -e
 
 mv ~/redmine_3cx ~/redmine/plugins
 cd ~/redmine/plugins/redmine_3cx
-rm PluginGemfile.lock
 cache restore gems-redmine_3cx-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION-$(checksum PluginGemfile)
 BUNDLE_GEMFILE=PluginGemfile bundle install --path ~/vendor/redmine-bundle
 cache store gems-redmine_3cx-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION-$(checksum PluginGemfile) ~/vendor/redmine-bundle
