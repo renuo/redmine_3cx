@@ -1,5 +1,7 @@
 # redmine_3cx
 
+This Redmine CRM 3CX integration plugin offers a configuration template along with a Basic Auth-protected HTTP endpoint for seamless integration with the Redmine Conctacts CRM system.
+
 ## Production Environment
 
 ### Preconditions
@@ -35,6 +37,7 @@ HTTPs
 3CX Integration
 
 1. `3CX Cloud Sidebar: Advanced/Contacts/Options/Match Caller ID`: select "Match exactly"
+1. `3CX Cloud Sidebar: Setings/Options/General Options`: uncheck "Hide CRM Contacts from 3CX Apps Company phonebook"
 1. `3CX Cloud Sidebar: Settings/CRM`: 
     * Upload CRM configuration
     * Fill in API Key (e.g. a5e6146b5d20add9334b4e724ce9d5ac4e10a5940a269b7fbd326ec3dbdcde79)

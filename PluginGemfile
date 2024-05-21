@@ -1,14 +1,14 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 group :development, :test do
-  gem 'factory_bot_rails'
-  if RUBY_VERSION[/^\d/] < '3'
-    gem 'factory_bot', '< 6.4.5'
+  gem "factory_bot_rails"
+  if RUBY_VERSION[/^\d/] < "3"
+    gem "factory_bot", "< 6.4.5"
   else
-    gem 'factory_bot'
+    gem "factory_bot"
   end
-  gem 'brakeman'
-  gem 'rails-controller-testing'
-  gem 'benchmark'
+  gem "brakeman"
+  gem "rails-controller-testing"
+  gem "benchmark"
 end
 
