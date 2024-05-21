@@ -1,6 +1,5 @@
 require_relative "../../app/models/contact_serializer"
 require "csv"
-require "debug"
 
 FILE_PATH = "tmp/contacts.csv"
 CONTACT_KEYS = [:first_name, :last_name, :company]
