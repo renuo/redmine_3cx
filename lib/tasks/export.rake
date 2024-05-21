@@ -13,6 +13,7 @@ namespace :redmine_3cx do
     local_path = File.expand_path(FILE_PATH)
     mode = File.exist?(FILE_PATH) ? "a+" : "w"
     puts "Exporting contacts to #{local_path}"
+
     CSV.open(FILE_PATH, mode) do |csv|
       csv.truncate(0)
       csv << csv_header
