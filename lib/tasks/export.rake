@@ -16,7 +16,9 @@ namespace :redmine_3cx do
   task export: :environment do
     contacts = Contact.all
 
-    puts "Exporting contacts to tmp/contacts.csv..."
+    local_path = File.expand_path(FILE_PATH)
+
+    puts "Exporting contacts to #{local_path}"
 
     mode = File.exist?(FILE_PATH) ? "a+" : "w"
 
