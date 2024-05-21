@@ -1,4 +1,4 @@
-# redmine_3cx
+# redmine_3c
 
 ## Production Environment
 
