@@ -1,0 +1,74 @@
+<table>
+  <tbody>
+    <tr>
+      <th>Active the 3CX integration</th>
+      <td>
+        <%= check_box_tag "settings[active]", true, @settings[:active] %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Follow the 3CX Setup guide in the <%= link_to "README.md", "https://github.com/renuo/redmine_3cx/blob/develop/README.md" %> integrate this plugin your 3CX system.
+
+<br>
+<%= link_to "Download CRM Template", redmine_3cx_template_path, download: "template.xml" %>
+<hr>
+
+<table>
+  <tbody>
+    <tr>
+      <th style="text-align: left;">Redmine Contacts</th>
+      <td>
+        <% if Redmine::Plugin.installed?("redmine_contacts") %>
+          <span class="icon found icon-ok"></span>
+          Redmine Contacts is installed.
+        <% else %>
+          <span class="icon found icon-warning"></span>
+          Redmine Contacts is not installed.
+          <em>Make sure to install it from
+            <%= link_to "RedmineUp", "https://www.redmineup.com/pages/plugins/crm?utm_source=redmine.org&utm_medium=referral&utm_term=RedmineOrg-CRM&utm_campaign=RedmineOrg-CRM-GetPlugin" %></em>.
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+    <tr>
+      <th style="text-align: left;">Rest API</th>
+      <td>
+        <% if Setting.rest_api_enabled? %>
+          <span class="icon found icon-ok"></span>
+          API authentication is active.
+        <% else %>
+          <span class="icon found icon-warning"></span>
+          Please active API authentication in <%= link_to "API Settings", settings_path(tab: "api") %>.
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th style="text-align: left;">Compatability</th>
+      <td>
+        <% compatible =
+          if defined?(Contact)
+            contact = Contact.new
+            required_fields = [:id, :first_name, :last_name, :phone, :company]
+            required_fields.map {|field| contact.respond_to?(field) }.all?
+          else
+            false
+          end
+        %>
+
+        <% if compatible %>
+          <span class="icon found icon-ok"></span>
+          Plugin is compatible with Redmine Contacts.
+        <% else %>
+          <span class="icon found icon-warning"></span>
+          Plugin is not compatible with Redmine Contacts.
+          Please make sure that the migrations have been run and that the a modern version has been installed.
+          <em>
+            Versions other than 4.4.1 Light and 4.4.0 Pro have not been tested and the integration might not work.
+          </em>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
