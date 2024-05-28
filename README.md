@@ -40,7 +40,7 @@ HTTPs
 1. `3CX Cloud Sidebar: Setings/Options/General Options`: uncheck "Hide CRM Contacts from 3CX Apps Company phonebook"
 1. `3CX Cloud Sidebar: Settings/CRM`: 
     * Upload CRM configuration
-    * Fill in API Key (e.g. a5e6146b5d20add9334b4e724ce9d5ac4e10a5940a269b7fbd326ec3dbdcde79)
+    * Fill in API Key (e.g. 2f5a9d4b1c7e8f3a6d2b0c9a1f8a3e1b4c7e5d9a)
     * Fill in Domain (e.g. redmine.example.com).
 1. Click `Test` and enter a phone number in your CRM.
 1. Click `OK` to add the integration.
