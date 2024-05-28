@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 cache restore redmine-$REDMINE_VERSION
 if [ ! -d ~/redmine ]; then git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git; fi

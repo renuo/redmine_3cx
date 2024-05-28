@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 mv ~/redmine_3cx ~/redmine/plugins
 cd ~/redmine/plugins/redmine_3cx
