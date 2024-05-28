@@ -1,9 +1,7 @@
 # Load the Redmine helper
 require "simplecov"
 SimpleCov.start do
-  add_filter do |source_file|
-    source_file.filename !~ %r{/plugins/redmine_3cx/}
-  end
+  add_filter %r{^/plugins/redmine_3cx/}
 end
 SimpleCov.minimum_coverage 100
 require "rails-controller-testing"
