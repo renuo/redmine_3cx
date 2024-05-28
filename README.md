@@ -2,6 +2,10 @@
 
 This Redmine CRM 3CX integration plugin offers a configuration template along with a Basic Auth-protected HTTP endpoint for seamless integration with the Redmine Conctacts CRM system.
 
+## Accessing Contacts API
+
+To access the contacts API in the Redmine CRM plugin, the current user must have the `:use_api` permission. This permission can be found under the Project permissions. It is important to note that the user account must have the `use_api` permission for the project that the contacts are part of, otherwise the project contacts will be skipped.
+
 ## Production Environment
 
 ### Preconditions
