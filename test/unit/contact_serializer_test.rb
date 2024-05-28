@@ -40,7 +40,7 @@ class ContactSerializerTest < ActiveSupport::TestCase
 
   def test_phones
     @phones.each do |expected, phone_number|
-      assert_equal(expected, ContactSerializer.map_phone_number(phone_number))
+      assert_equal(expected, ContactSerializer.normalize_phone_number(phone_number))
     end
   end
 

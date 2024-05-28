@@ -18,13 +18,13 @@ class CrmApiController < ApplicationController
     if params[:phone].blank?
       render json: {error: "Phone number is required!"}, status: :bad_request
     end
-  end
+end
 
   def find_contacts
-    phone_number = ContactSerializer.map_phone_number(params[:phone])
+    phone_number = ContactSerializer.normalize_phone_number(params[:phone])
 
     @contacts = Contact.joins(:projects).filter do |contact|
-      contact.phones.map { |phone| ContactSerializer.map_phone_number(phone) }.include?(phone_number)
+      contact.phones.map { |phone| ContactSerializer.normalize_phone_number(phone) }.include?(phone_number)
     end.filter do |contact|
       User.current.allowed_to?(:use_api, contact.project)
     end
