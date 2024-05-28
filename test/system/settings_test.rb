@@ -1,8 +1,7 @@
+return if ENV["CI"] == "true"
+
 require_relative "../test_helper"
 require_relative "../../../../test/application_system_test_case"
-
-# The CI is not configured to run capybara tests at the moment
-return if ENV["CI"] == "true"
 
 class SettingsTest < ApplicationSystemTestCase
   include FactoryBot::Syntax::Methods
