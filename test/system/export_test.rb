@@ -12,19 +12,13 @@ class ExportTest < ActiveSupport::TestCase
     @csv = CSV.read("tmp/contacts.csv")
   end
 
-  def test_missing_phone_numbers
-    assert @csv.none? { |row| row[3..].all? { |cell| cell.blank? } }
-  end
-
-  def test_row_count
-    assert @csv.count == 5
-  end
-
-  def test_headers
-    assert @csv.first == ["FirstName", "LastName", "Company", "Business", "Business2", "Home", "Home2", "Mobile", "Mobile2", "Other"]
-  end
-
-  def test_empty_rows
-    assert @csv.none? { |row| row.all? { |cell| cell.empty? } }
+  def test_csv_contents
+    assert_equal <<~CSV, File.read("tmp/contacts.csv")
+      FirstName,LastName,Company,Business,Business2,Home,Home2,Mobile,Mobile2,Other
+      John,Doe,Example AG,0781234567,,,,,,
+      John,Doe,Example AG,0781234567,,,,,,
+      John,Doe,Example AG,0781234567,,,,,,
+      John,Doe,Example AG,0781234567,,,,,,
+    CSV
   end
 end
