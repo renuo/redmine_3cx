@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-cp -n .ruby-version ../../.ruby-version
-
-# Install Dependencies
 BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
 cd ../..
 
