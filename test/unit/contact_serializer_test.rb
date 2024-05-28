@@ -4,15 +4,6 @@ class ContactSerializerTest < ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
 
   def setup
-    @phones = [
-      ["0761234567", "+41 76 123 45 67"],
-      ["0348901234", "041 34 890 12 34"],
-      ["0795554578", "+41 (0)79 555 45 78"],
-      ["0794567890", "079 456 78 90"],
-      ["0314567890", "+41 (0)31 456 78 90"],
-      ["0442345678", "044 234 56 78"],
-      ["0442345678", "Direkt: 044 234 56 78"]
-    ]
     @contact = create(:contact, phone: "1,2,3,4,5,6,7,8")
   end
 
@@ -39,7 +30,15 @@ class ContactSerializerTest < ActiveSupport::TestCase
   end
 
   def test_phone_normalization
-    @phones.each do |expected, phone_number|
+    [
+      ["0761234567", "+41 76 123 45 67"],
+      ["0348901234", "041 34 890 12 34"],
+      ["0795554578", "+41 (0)79 555 45 78"],
+      ["0794567890", "079 456 78 90"],
+      ["0314567890", "+41 (0)31 456 78 90"],
+      ["0442345678", "044 234 56 78"],
+      ["0442345678", "Direkt: 044 234 56 78"]
+    ].each do |expected, phone_number|
       assert_equal(expected, ContactSerializer.normalize_phone_number(phone_number))
     end
   end
