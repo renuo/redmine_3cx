@@ -1,5 +1,5 @@
 class CrmApiController < ApplicationController
-  before_action :check_plugin_state, :authorize_global, :validate_params, :find_contacts, only: [:index]
+  before_action :authorize_global, :check_plugin_state, :validate_params, :find_contacts, only: [:index]
   accept_api_auth :index
 
   def index
