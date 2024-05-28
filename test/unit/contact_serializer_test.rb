@@ -16,7 +16,7 @@ class ContactSerializerTest < ActiveSupport::TestCase
     @contact = create(:contact, phone: "1,2,3,4,5,6,7,8")
   end
 
-  def test_call
+  def test_serialization
     expected = {
       id: @contact.id,
       firstname: "John",
