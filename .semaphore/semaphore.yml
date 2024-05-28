@@ -49,9 +49,7 @@ blocks:
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - checkout --use-cache && cd ~
             - ~/redmine_3cx/.semaphore/bin/setup_redmine
-            - cd ~/redmine/plugins
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
-            - cd ~/redmine/plugins
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
             - bundle exec rake redmine_3cx:check
           matrix:
@@ -75,9 +73,7 @@ blocks:
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - checkout --use-cache && cd ~
             - ~/redmine_3cx/.semaphore/bin/setup_redmine
-            - cd ~/redmine/plugins
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
-            - cd ~/redmine/plugins
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
             - bundle exec rake redmine_3cx:check
           matrix:
