@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+cd ~/redmine/plugins
 curl -L -o redmine_contacts.zip "$REDMINE_CRM_DOWNLOAD_URL"
 unzip redmine_contacts.zip
 cd ~/redmine/plugins/redmine_contacts
