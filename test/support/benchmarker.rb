@@ -7,7 +7,7 @@ module Benchmarker
 
     percentile_time = calculate_percentile_time(report, percentile)
     error_message = "#{description} exceeded #{percentile} percentile time of #{max_time_ms}ms"
-    assert_operator percentile_time, :<, max_time_ms, error_message
+    assert_operator percentile_time, :<=, max_time_ms, error_message
   end
 
   def calculate_percentile_time(report, percentile)
