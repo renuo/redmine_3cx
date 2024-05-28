@@ -51,7 +51,7 @@ blocks:
             - ~/redmine_3cx/.semaphore/bin/setup_redmine
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
-            - bundle exec rake redmine_3cx:check
+            - CI=true bundle exec rake redmine_3cx:check
           matrix:
             - env_var: REDMINE_VERSION
               values: ["5.1", "5.0"]
@@ -75,7 +75,7 @@ blocks:
             - ~/redmine_3cx/.semaphore/bin/setup_redmine
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
-            - bundle exec rake redmine_3cx:check
+            - CI=true bundle exec rake redmine_3cx:check
           matrix:
             - env_var: REDMINE_VERSION
               values: ["4.2", "4.1", "4.0"]
