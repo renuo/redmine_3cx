@@ -55,7 +55,7 @@ class CrmApiControllerTest < ActionController::TestCase
 
   def test_performance
     create_list(:contact, 100, phone: "other")
-    benchmark("CrmApiController#index", percentile: 95, max_time_ms: 100, runs: 200) { get_contact_assert_success }
+    assert_benchmark("CrmApiController#index", percentile: 95, max_time_ms: 100, runs: 200) { get_contact_assert_success }
   end
 
   def test_index_invalid_credentials
