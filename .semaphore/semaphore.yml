@@ -47,10 +47,11 @@ blocks:
           commands:
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
-            - checkout --use-cache && cd ~
+            - checkout --use-cache
             - ~/redmine_3cx/.semaphore/bin/setup_redmine
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
+            - cd ~/redmine/plugins/redmine_3cx
             - CI=true bundle exec rake redmine_3cx:check
           matrix:
             - env_var: REDMINE_VERSION
@@ -71,10 +72,11 @@ blocks:
           commands:
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
-            - checkout --use-cache && cd ~
+            - checkout --use-cache
             - ~/redmine_3cx/.semaphore/bin/setup_redmine
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
             - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
+            - cd ~/redmine/plugins/redmine_3cx
             - CI=true bundle exec rake redmine_3cx:check
           matrix:
             - env_var: REDMINE_VERSION
