@@ -1,9 +1,8 @@
 # Load the Redmine helper
 require "simplecov"
-SimpleCov.start do
-  add_filter %r{^/plugins/redmine_3cx/}
-end
+SimpleCov.root File.expand_path(File.dirname(__FILE__) + "/../")
 SimpleCov.minimum_coverage 100
+SimpleCov.start
 require "rails-controller-testing"
 Rails::Controller::Testing.install
 require File.expand_path(File.dirname(__FILE__) + "/../../../test/test_helper")
