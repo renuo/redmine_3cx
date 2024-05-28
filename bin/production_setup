@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-cp -n .ruby-version ../../.ruby-version
-
 export RAILS_ENV=production
 
 # Install Dependencies
