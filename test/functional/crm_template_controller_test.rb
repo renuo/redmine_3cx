@@ -32,6 +32,6 @@ class CrmTemplateControllerTest < ActionController::TestCase
 
   def test_unauthorized
     get :template, format: :xml
-    assert_response :forbidden
+    assert_response :unauthorized
   end
 end
