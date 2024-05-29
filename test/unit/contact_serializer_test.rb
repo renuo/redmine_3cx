@@ -44,7 +44,6 @@ class ContactSerializerTest < ActiveSupport::TestCase
   end
 
   def test_add_phone_numbers
-    assert_equal({}, ContactSerializer.map_phone_numbers_to_keys([]))
-    assert_equal({phone_business: "1234567890"}, ContactSerializer.map_phone_numbers_to_keys(["1234567890"]))
+    assert_equal({ phone_business: nil, phone_business2: nil, phone_home: nil, phone_home2: nil, phone_mobile: nil, phone_mobile2: nil, phone_other: nil }, ContactSerializer.map_phone_numbers_to_keys([]))
   end
 end

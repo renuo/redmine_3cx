@@ -13,14 +13,12 @@ class ContactSerializer
       # Phone numbers stored as an array in the database without an annotation.
       # We map them in the order they are stored, as defined by the PHONE_NUMBER_KEYS constant.
       phone_numbers = map_phone_numbers_to_keys(contact.phones)
-      contact_hash.merge(phone_numbers)
+      contact_hash.merge(phone_numbers.compact)
     end
 
     def map_phone_numbers_to_keys(phone_numbers)
-      PHONE_NUMBER_KEYS.each_with_index.with_object({}) do |(key, index), result|
-        phone_number = phone_numbers[index]
-        result[key] = normalize_phone_number(phone_number) if phone_number
-      end
+      normalized_numbers = phone_numbers.map { |phone_number| normalize_phone_number(phone_number) }
+      PHONE_NUMBER_KEYS.zip(normalized_numbers).to_h
     end
 
     def normalize_phone_number(phone_number)

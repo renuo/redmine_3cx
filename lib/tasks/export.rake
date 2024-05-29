@@ -31,7 +31,7 @@ end
 def csv_header
   [
     *CONTACT_KEYS.map { |key| to_pascal_case(key.to_s) },
-    *PHONE_KEYS.map { |key| to_pascal_case(key.to_s) }
+    *PHONE_KEYS.map { |key| to_pascal_case(key.to_s.gsub("phone_", "")) }
   ]
 end
 
@@ -48,6 +48,6 @@ end
 def contact_row(contact, phones)
   [
     *CONTACT_KEYS.map { |key| contact[key] },
-    *PHONE_KEYS.map { |key| phones[:"phone_#{key}"] }
+    *PHONE_KEYS.map { |key| phones[key] }
   ]
 end
