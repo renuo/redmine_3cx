@@ -66,8 +66,9 @@ class CrmApiControllerTest < ActionController::TestCase
     assert_response(:unauthorized)
   end
 
-  def test_index_non_project_member
+  def test_index_user_non_member
     other_project = create(:project)
+    other_project.enable_module! :contacts
     other_contact = create(:contact, phone: "0123456789", project: other_project)
 
     get_contact(other_contact.phone)
