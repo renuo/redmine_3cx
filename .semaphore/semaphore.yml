@@ -18,7 +18,7 @@ global_job_config:
     - name: REDMINE_VERSION
       value: "5.1"
     - name: RUBY_VERSION
-      value: "3.1.4"
+      value: "3.2.3"
 
 blocks:
   - name: Fastcheck
@@ -30,7 +30,7 @@ blocks:
         - name: fastcheck
           env_vars:
             - name: RUBY_VERSION
-              value: "3.1.1"
+              value: "3.2.3"
           commands:
             - sem-version ruby $RUBY_VERSION -f
             - checkout --use-cache
