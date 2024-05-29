@@ -8,7 +8,7 @@ class CrmApiControllerTest < ActionController::TestCase
 
   def setup
     Setting.rest_api_enabled = "1"
-    Setting[:plugin_redmine_3cx] = {active: true}
+    Setting.plugin_redmine_3cx = {active: true}
     project = create(:project)
     project.enable_module! :contacts
 
