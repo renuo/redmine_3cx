@@ -10,10 +10,10 @@ namespace :redmine_3cx do
   task export: :environment do
     contacts = Contact.all
     local_path = File.expand_path(FILE_PATH)
-    mode = File.exist?(FILE_PATH) ? "a+" : "w"
+    File.delete(FILE_PATH) if File.exist?(FILE_PATH)
     puts "Exporting contacts to #{local_path}"
 
-    CSV.open(FILE_PATH, mode) do |csv|
+    CSV.open(FILE_PATH, "w") do |csv|
       csv.truncate(0)
       csv << csv_header
       contacts.each do |contact|
