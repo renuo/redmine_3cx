@@ -30,8 +30,8 @@ class CrmTemplateControllerTest < ActionController::TestCase
     assert_not_nil doc.at_xpath("//Scenarios")
   end
 
-  def test_unauthorized
+  def test_forbidden
     get :template, format: :xml
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 end
