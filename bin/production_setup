@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
+BUNDLE_GEMFILE=PluginGemfile bundle install -j 4 --without development test
 cd ../..
 
 bundle exec rake redmine:plugins:migrate
