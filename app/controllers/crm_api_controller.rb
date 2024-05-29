@@ -1,5 +1,5 @@
 class CrmApiController < ApplicationController
-  before_action :authorize_global, :check_plugin_state, :validate_params, :find_contacts, only: [:index]
+  before_action :authorize_global, :check_plugin_state, :find_contacts, only: [:index]
   accept_api_auth :index
 
   def index
@@ -14,14 +14,12 @@ class CrmApiController < ApplicationController
     end
   end
 
-  def validate_params
-    if params[:phone].blank?
-      render json: {error: "Phone number is required!"}, status: :bad_request
-    end
-end
+  def phone_params
+    params.require(:phone)
+  end
 
   def find_contacts
-    phone_number = ContactSerializer.normalize_phone_number(params[:phone])
+    phone_number = ContactSerializer.normalize_phone_number(phone_params)
 
     @contacts = Contact.joins(:projects).filter do |contact|
       contact.phones.map { |phone| ContactSerializer.normalize_phone_number(phone) }.include?(phone_number)

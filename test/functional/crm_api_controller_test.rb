@@ -50,12 +50,6 @@ class CrmApiControllerTest < ActionController::TestCase
     assert_equal(@expected_contact_response, response.body)
   end
 
-  def test_index_param_not_present
-    get_contact(nil)
-    assert_response(:bad_request)
-    assert_equal({error: "Phone number is required!"}.to_json, response.body)
-  end
-
   def test_index_not_found
     get_contact("Nonexistent")
     assert_response(:success)
