@@ -30,7 +30,8 @@ class CrmTemplateControllerTest < ActionController::TestCase
     assert_not_nil doc.at_xpath("//Scenarios")
   end
 
-  def test_forbidden
+  def test_not_admin
+    @request.session[:user_id] = 2
     get :template, format: :xml
     assert_response :forbidden
   end
