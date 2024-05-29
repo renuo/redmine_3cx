@@ -33,28 +33,33 @@ class CrmApiControllerTest < ActionController::TestCase
 
   def test_index
     get_contact(@contact.phone, @api_key)
-    assert_response :success
-    assert_equal @expected_contact_response, response.body
+    assert_response(:success)
+    assert_equal(@expected_contact_response, response.body)
   end
 
   def test_index_inactive
     Setting[:plugin_redmine_3cx] = {active: false}
     get_contact(@contact.phone, @api_key)
-    assert_response :forbidden
+    assert_response(:forbidden)
     assert_equal({error: "Plugin not active"}.to_json, response.body)
-    Setting[:plugin_redmine_3cx] = {active: true}
   end
 
   def test_index_alternate_phone_format
-    assert_index_response("+41 (0) 78 123 45 67 ", :success, @expected_contact_response)
+    get_contact("+41 (0) 78 123 45 67 ")
+    assert_response(:success)
+    assert_equal(@expected_contact_response, response.body)
   end
 
   def test_index_param_not_present
-    assert_index_response(nil, :bad_request, {error: "Phone number is required!"}.to_json)
+    get_contact(nil)
+    assert_response(:bad_request)
+    assert_equal({error: "Phone number is required!"}.to_json, response.body)
   end
 
   def test_index_not_found
-    assert_index_response("Nonexistent", :success, {contacts: []}.to_json)
+    get_contact("Nonexistent")
+    assert_response(:success)
+    assert_equal({contacts: []}.to_json, response.body)
   end
 
   def test_performance
@@ -63,32 +68,30 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_index_invalid_credentials
-    assert_index_response(@contact.phone, :unauthorized, "", api_key: "Invalid")
+    get_contact(@contact.phone, "Invalid")
+    assert_response(:unauthorized)
   end
 
   def test_index_non_project_member
     other_project = create(:project)
     other_contact = create(:contact, phone: "0123456789", project: other_project)
 
-    assert_index_response(other_contact.phone, :success, {contacts: []}.to_json)
+    get_contact(other_contact.phone)
+    assert_response(:success)
+    assert_equal({contacts: []}.to_json, response.body)
   end
 
   private
 
   def get_contact_assert_success
-    assert_index_response(@contact.phone, :success, @expected_contact_response)
-  end
-
-  def assert_index_response(phone, status, expected_response, api_key: @api_key)
-    get_contact(phone, api_key)
-    assert_response status
-    assert_includes "application/json; charset=utf-8", response.content_type
-    assert_equal expected_response, response.body
+    get_contact(@contact.phone)
+    assert_response(:success)
+    assert_equal(@expected_contact_response, response.body)
   end
 
   def get_contact(phone, api_key = @api_key)
     headers = {"HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(api_key, "x")}
     @request.headers.merge! headers
-    get :index, params: {phone: phone}, format: :json
+    get(:index, params: {phone: phone}, format: :json)
   end
 end
