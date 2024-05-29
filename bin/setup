@@ -1,12 +1,21 @@
 #!/usr/bin/env bash
-cp -n .ruby-version ../../.ruby-version
 
-# Install Dependencies
+ORIGINAL_DIR=$(pwd)
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PLUGIN_DIR="$SCRIPT_DIR/.."
+REDMINE_DIR="$PLUGIN_DIR/../.."
+
+function cleanup {
+    cd "$ORIGINAL_DIR"
+}
+
+trap cleanup EXIT
+
+cd $PLUGIN_DIR
 BUNDLE_GEMFILE=PluginGemfile bundle install -j 4
-cd ../..
 
-cp -n config/database.example.yml config/database.yml
-
+cd $REDMINE_DIR
+cp -n config/database.yml.example config/database.yml
 bundle exec rake db:create db:migrate db:seed
 bundle exec rake redmine:plugins:migrate
-bundle exec rake redmine_3cx:seed

@@ -1,7 +1,7 @@
 <table>
   <tbody>
     <tr>
-      <th>Active the 3CX integration</th>
+      <th>Activate the 3CX integration</th>
       <td>
         <%= check_box_tag "settings[active]", true, @settings[:active] %>
       </td>
@@ -9,7 +9,7 @@
   </tbody>
 </table>
 
-Follow the 3CX Setup guide in the <%= link_to "README.md", "https://github.com/renuo/redmine_3cx/blob/develop/README.md" %> integrate this plugin your 3CX system.
+Follow the 3CX setup guide in the <%= link_to "README.md", "https://github.com/renuo/redmine_3cx/blob/develop/README.md" %> integrate this plugin to your 3CX system.
 
 <br>
 <%= link_to "Download CRM Template", redmine_3cx_template_path, download: "template.xml" %>
@@ -27,7 +27,7 @@ Follow the 3CX Setup guide in the <%= link_to "README.md", "https://github.com/r
           <span class="icon found icon-warning"></span>
           Redmine Contacts is not installed.
           <em>Make sure to install it from
-            <%= link_to "RedmineUp", "https://www.redmineup.com/pages/plugins/crm?utm_source=redmine.org&utm_medium=referral&utm_term=RedmineOrg-CRM&utm_campaign=RedmineOrg-CRM-GetPlugin" %></em>.
+            <%= link_to "RedmineUp", "https://www.redmineup.com/pages/plugins/crm" %></em>.
         <% end %>
       </td>
     </tr>
@@ -65,7 +65,7 @@ Follow the 3CX Setup guide in the <%= link_to "README.md", "https://github.com/r
           Plugin is not compatible with Redmine Contacts.
           Please make sure that the migrations have been run and that the a modern version has been installed.
           <em>
-            Versions other than 4.4.1 Light and 4.4.0 Pro have not been tested and the integration might not work.
+            Versions other than 4.4.x Light and Pro have not been tested and the integration might not work.
           </em>
         <% end %>
       </td>

@@ -2,6 +2,10 @@
 
 This Redmine CRM 3CX integration plugin offers a configuration template along with a Basic Auth-protected HTTP endpoint for seamless integration with the Redmine Conctacts CRM system.
 
+## Accessing Contacts API
+
+To access the contacts API in the Redmine CRM plugin, the current user must have the `:use_api` permission. This permission can be found under the Project permissions. It is important to note that the user account must have the `use_api` permission for the project that the contacts are part of, otherwise the project contacts will be skipped.
+
 ## Production Environment
 
 ### Preconditions
@@ -40,7 +44,7 @@ HTTPs
 1. `3CX Cloud Sidebar: Setings/Options/General Options`: uncheck "Hide CRM Contacts from 3CX Apps Company phonebook"
 1. `3CX Cloud Sidebar: Settings/CRM`: 
     * Upload CRM configuration
-    * Fill in API Key (e.g. a5e6146b5d20add9334b4e724ce9d5ac4e10a5940a269b7fbd326ec3dbdcde79)
+    * Fill in API Key (e.g. 2f5a9d4b1c7e8f3a6d2b0c9a1f8a3e1b4c7e5d9a)
     * Fill in Domain (e.g. redmine.example.com).
 1. Click `Test` and enter a phone number in your CRM.
 1. Click `OK` to add the integration.
