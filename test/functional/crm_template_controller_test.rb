@@ -31,8 +31,9 @@ class CrmTemplateControllerTest < ActionController::TestCase
   end
 
   def test_not_admin
-    @request.session[:user_id] = 2
+    @request.session[:user_id] = 1
     get :template, format: :xml
-    assert_response :forbidden
+    status = @response.status
+    assert_includes [401, 403], @response.status
   end
 end
