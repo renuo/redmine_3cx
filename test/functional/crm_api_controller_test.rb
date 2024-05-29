@@ -32,12 +32,16 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_index
-    get_contact_assert_success
+    get_contact(@contact.phone, @api_key)
+    assert_response :success
+    assert_equal @expected_contact_response, response.body
   end
 
   def test_index_inactive
     Setting[:plugin_redmine_3cx] = {active: false}
-    assert_index_response(@contact.phone, :forbidden, {error: "Plugin not active"}.to_json)
+    get_contact(@contact.phone, @api_key)
+    assert_response :forbidden
+    assert_equal({error: "Plugin not active"}.to_json, response.body)
     Setting[:plugin_redmine_3cx] = {active: true}
   end
 
