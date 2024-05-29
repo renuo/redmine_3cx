@@ -10,6 +10,8 @@ class ContactSerializer
         company: contact.company
       }
 
+      # Phone numbers stored as an array in the database without an annotation.
+      # We map them in the order they are stored, as defined by the PHONE_NUMBER_KEYS constant.
       phone_numbers = map_phone_numbers_to_keys(contact.phones)
       contact_hash.merge(phone_numbers)
     end
