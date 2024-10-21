@@ -26,8 +26,7 @@
 
 ### Fixes
 
-- Update semaphore workflow. [(commit 65778296)](https://github.com/renuo/redmine_3cx/commit/65778296)
-- Update github workflow. [(commit 8d71989e)](https://github.com/renuo/redmine_3cx/commit/8d71989e)
+- Migrate from GitHub to semaphore. [(commit 65778296)](https://github.com/renuo/redmine_3cx/commit/65778296)
 - Update README. [(commit f402c4a0)](https://github.com/renuo/redmine_3cx/commit/f402c4a0)
 - Update setup. [(commit 3b80d1ee)](https://github.com/renuo/redmine_3cx/commit/3b80d1ee)
 
