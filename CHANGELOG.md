@@ -2,9 +2,9 @@
 
 ## 1.0.0
 
-### Additions
+### Changes
 
-- IPA Review. [(commit 33590ea1)](https://github.com/renuo/redmine_3cx/commit/33590ea1)
+- IPA Review, refactoring. [(commit 33590ea1)](https://github.com/renuo/redmine_3cx/commit/33590ea1)
 
 ## 0.3.0
 
@@ -19,10 +19,6 @@
 - Implement API Endpoint. [(commit 04b030a5)](https://github.com/renuo/redmine_3cx/commit/04b030a5)
 
 ## 0.1.0
-
-### Additions
-
-- Project Setup. [(commit cfacae9e)](https://github.com/renuo/redmine_3cx/commit/cfacae9e)
 
 ### Changes
 
