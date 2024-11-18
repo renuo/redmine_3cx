@@ -3,6 +3,7 @@
 set -euo pipefail
 
 cache restore redmine-$REDMINE_VERSION
+cd ~
 if [ ! -d ~/redmine ]; then git clone -b $REDMINE_VERSION-stable git@github.com:redmine/redmine.git; fi
 cache store redmine-$REDMINE_VERSION ~/redmine
 cd ~/redmine
