@@ -13,12 +13,3 @@ group :development, :test do
   gem "benchmark"
 end
 
-case ENV['REDMINE_VERSION']
-when "4.0", "4.1", "4.2"
-  gem "loofah", "< 2.21.0"
-  gem "blankslate"
-  gem "nokogiri"
-when "6.0"
-  gem "rake"
-end
-

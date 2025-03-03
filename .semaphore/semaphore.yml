@@ -44,6 +44,7 @@ blocks:
       jobs:
         - name: checks
           commands:
+            - cache clear
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - checkout --use-cache
@@ -66,6 +67,7 @@ blocks:
       jobs:
         - name: checks
           commands:
+            - cache clear
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - checkout --use-cache
@@ -91,6 +93,7 @@ blocks:
             - name: RUBY_VERSION
               value: "2.6.10"
           commands:
+            - cache clear
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
             - checkout --use-cache
