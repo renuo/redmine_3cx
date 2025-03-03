@@ -3,6 +3,7 @@ require "simplecov"
 SimpleCov.root File.expand_path(File.dirname(__FILE__) + "/../")
 SimpleCov.minimum_coverage 100
 SimpleCov.start do
+  add_filter "PluginGemfile"
   add_filter "/test/system/settings_test.rb" if ENV["CI"] # Remove once capybara is setup for CI
 end
 require "rails-controller-testing"
