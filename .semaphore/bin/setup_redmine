@@ -9,6 +9,7 @@ cache store redmine-$REDMINE_VERSION ~/redmine
 cd ~/redmine
 cp ~/redmine_3cx/.semaphore/database_$SEMAPHORE_DATABASE_ADAPTER.yml config/database.yml
 echo 'gem "loofah", "< 2.21.0"' > Gemfile.local # for redmine 4.1 and below, loofah is missing in Gemfile
+echo 'gem "blankslate"' > Gemfile.local # for redmine 4.1 blankslate gem is missing in Gemfile
 cache restore gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION
 bundle install --path ~/vendor/redmine-bundle
 cache store gems-redmine-$SEMAPHORE_DATABASE_ADAPTER-$REDMINE_VERSION-$RUBY_VERSION ~/vendor/redmine-bundle
