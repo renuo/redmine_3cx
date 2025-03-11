@@ -36,60 +36,13 @@ blocks:
             - checkout --use-cache
             - bin/fastcheck
 
-  # - name: Redmine 6
-  #   dependencies: []
-  #   execution_time_limit:
-  #     minutes: 5
-  #   task:
-  #     jobs:
-  #       - name: checks
-  #         commands:
-  #           - sem-version ruby $RUBY_VERSION -f
-  #           - sem-service start $SEMAPHORE_DATABASE_ADAPTER
-  #           - checkout --use-cache
-  #           - ~/redmine_3cx/.semaphore/bin/setup_redmine
-  #           - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
-  #           - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
-  #           - cd ~/redmine/plugins/redmine_3cx
-  #           - CI=true bundle exec rake redmine_3cx:check
-  #         matrix:
-  #           - env_var: REDMINE_VERSION
-  #             values: ["6.0"]
-  #           - env_var: SEMAPHORE_DATABASE_ADAPTER
-  #             values: ["postgres", "mysql"]
-  #
-  # - name: Redmine 5
-  #   dependencies: []
-  #   execution_time_limit:
-  #     minutes: 5
-  #   task:
-  #     jobs:
-  #       - name: checks
-  #         commands:
-  #           - sem-version ruby $RUBY_VERSION -f
-  #           - sem-service start $SEMAPHORE_DATABASE_ADAPTER
-  #           - checkout --use-cache
-  #           - ~/redmine_3cx/.semaphore/bin/setup_redmine
-  #           - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
-  #           - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
-  #           - cd ~/redmine/plugins/redmine_3cx
-  #           - CI=true bundle exec rake redmine_3cx:check
-  #         matrix:
-  #           - env_var: REDMINE_VERSION
-  #             values: ["5.1", "5.0"]
-  #           - env_var: SEMAPHORE_DATABASE_ADAPTER
-  #             values: ["postgres", "mysql"]
-
-  - name: Redmine 4
+  - name: Redmine 6
     dependencies: []
     execution_time_limit:
       minutes: 5
     task:
       jobs:
         - name: checks
-          env_vars:
-            - name: RUBY_VERSION
-              value: "2.6.10"
           commands:
             - sem-version ruby $RUBY_VERSION -f
             - sem-service start $SEMAPHORE_DATABASE_ADAPTER
@@ -101,6 +54,28 @@ blocks:
             - CI=true bundle exec rake redmine_3cx:check
           matrix:
             - env_var: REDMINE_VERSION
-              values: ["4.2", "4.1", "4.0"]
+              values: ["6.0"]
+            - env_var: SEMAPHORE_DATABASE_ADAPTER
+              values: ["postgres", "mysql"]
+
+  - name: Redmine 5
+    dependencies: []
+    execution_time_limit:
+      minutes: 5
+    task:
+      jobs:
+        - name: checks
+          commands:
+            - sem-version ruby $RUBY_VERSION -f
+            - sem-service start $SEMAPHORE_DATABASE_ADAPTER
+            - checkout --use-cache
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
+            - cd ~/redmine/plugins/redmine_3cx
+            - CI=true bundle exec rake redmine_3cx:check
+          matrix:
+            - env_var: REDMINE_VERSION
+              values: ["5.1", "5.0"]
             - env_var: SEMAPHORE_DATABASE_ADAPTER
               values: ["postgres", "mysql"]
