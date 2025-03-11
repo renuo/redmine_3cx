@@ -9,12 +9,12 @@ class CrmTemplateControllerTest < ActionController::TestCase
     get :template
     assert_response :success
     assert_includes @response.content_type, "application/xml"
-    assert_template "crm_template/template.xml"
+    assert_template "crm_template/template"
   end
 
   def test_template_valid_xml
     @request.session[:user_id] = 1
-    get :template, format: :xml
+    get :template
     doc = Nokogiri::XML(@response.body)
     assert_empty doc.errors
   end
