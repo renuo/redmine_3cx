@@ -51,6 +51,8 @@ class SettingsTest < ApplicationSystemTestCase
     assert_active_state(true)
     uncheck "settings[active]"
     click_on "Apply"
+
+    visit_settings_page
     assert_active_state(nil)
   end
 
