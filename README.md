@@ -1,4 +1,4 @@
-# redmine_3cx
+# test
 
 This Redmine CRM 3CX integration plugin offers a configuration template along with a Basic Auth-protected HTTP endpoint for seamless integration with the Redmine Conctacts CRM system.
 
