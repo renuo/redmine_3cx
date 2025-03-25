@@ -8,6 +8,7 @@ class ExportTest < ActiveSupport::TestCase
   def setup
     require "rake"
     Rake.application.load_rakefile
+    # test
 
     create(:contact, first_name: "Borris", last_name: "Doe", company: "Example AG", phone: nil)
     create(:contact, first_name: "John", last_name: "Doe", company: "Example AG", phone: "0781234567")
