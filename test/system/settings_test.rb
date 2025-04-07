@@ -58,7 +58,11 @@ class SettingsTest < ApplicationSystemTestCase
 
   def assert_active_state(state)
     Setting.clear_cache
-    assert_equal state, Setting.plugin_redmine_3cx[:active]
+    if state.nil?
+      assert_nil Setting.plugin_redmine_3cx[:active]
+    else
+      assert_equal state, Setting.plugin_redmine_3cx[:active]
+    end
   end
 
   def visit_settings_page

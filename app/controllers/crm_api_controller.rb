@@ -21,7 +21,7 @@ class CrmApiController < ApplicationController
   def find_contacts
     phone_number = ContactSerializer.normalize_phone_number(phone_params)
 
-    @contacts = Contact.joins(:projects).filter do |contact|
+    @contacts = Contact.joins(:projects).order(:is_company).filter do |contact|
       contact.phones.map { |phone| ContactSerializer.normalize_phone_number(phone) }.include?(phone_number)
     end.filter do |contact|
       User.current.allowed_to?(:use_api, contact.project)

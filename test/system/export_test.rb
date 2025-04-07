@@ -14,6 +14,7 @@ class ExportTest < ActiveSupport::TestCase
     create(:contact, first_name: "Other", last_name: "Person", company: "Example AG", phone: "+41 78 123 45 67, 078 123 45 67, 078 123 45 67")
     create(:contact, first_name: "Another", last_name: "Person", company: "Example AG", phone: "+41 (0) 78 123 45 67")
     create(:contact, first_name: "Yet", last_name: "Another", company: "Example AG", phone: "+41 78 123 45 67")
+
     Rake::Task["redmine_3cx:export"].invoke
     @csv = CSV.read("tmp/contacts.csv")
   end
