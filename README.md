@@ -67,3 +67,7 @@ cd redmine/plugins/redmine_3cx
 bin/setup
 bin/run
 ```
+
+## Copyright
+
+At Renuo, published under MIT licence 2024-2025 
