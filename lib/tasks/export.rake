@@ -13,7 +13,7 @@ namespace :redmine_3cx do
     File.delete(FILE_PATH) if File.exist?(FILE_PATH)
     puts "Exporting contacts to #{local_path}"
 
-    CSV.open(FILE_PATH, "w") do |csv|
+    CSV.open(FILE_PATH, "w", row_sep: "\r\n") do |csv|
       csv.truncate(0)
       csv << csv_header
       contacts.each do |contact|
