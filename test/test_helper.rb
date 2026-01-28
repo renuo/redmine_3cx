@@ -8,6 +8,7 @@ SimpleCov.start do
   add_filter "/lib/tasks/seed.rake"
   add_filter "/lib/tasks/test.rake"
   add_filter "/lib/tasks/run.rake"
+  add_filter "/lib/tasks/call_api.rake"
 end
 require "rails-controller-testing"
 Rails::Controller::Testing.install
