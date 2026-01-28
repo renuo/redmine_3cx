@@ -32,13 +32,12 @@ namespace :redmine_3cx do
 
     raise "Permission check failed" unless account.allowed_to?(:use_api, contacts.last.project)
 
-    credentials = Base64.strict_encode64("#{account.api_key}:x").chomp
+    credentials = "#{account.api_key}:x"
     puts "API Key: #{account.api_key}"
-    puts(
-      <<~CURL
-    curl --request GET \\
-      --url 'http://localhost:3000/3cx/contacts.json?phone=#{URI.encode_uri_component(contacts.first.phones.first)}' \\
-      --header 'authorization: Basic #{Base64.strict_encode64(credentials)}'
+    puts(<<~CURL
+         curl --request GET \\
+           --url 'http://localhost:3000/3cx/contacts.json?phone=#{URI.encode_uri_component(contacts.first.phones.first)}' \\
+           --header 'authorization: Basic #{Base64.encode64(credentials).chomp}'
     CURL
     )
   end
