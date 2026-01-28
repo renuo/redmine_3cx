@@ -22,7 +22,10 @@ class ContactSerializer
     end
 
     def normalize_phone_number(phone_number)
-      phone_number.gsub(/[^+0-9]/, "").gsub(/^[+0]41/, "").rjust(10, "0")
+      phone_number.to_s.gsub(/[^0-9]/, "")
+        .sub(/^(0041|041|41)/, "")
+        .sub(/^00/, "0")
+        .rjust(10, "0")
     end
   end
 end
