@@ -1,4 +1,3 @@
-
 namespace :redmine_3cx do
   desc "Seed"
   task seed: :environment do
@@ -9,7 +8,7 @@ namespace :redmine_3cx do
     role = create_role
     project = create_sample_project
     account = create_service_account
-    membership = create_membership(account, project, role)
+    create_membership(account, project, role)
     contacts = create_contacts(project)
 
     account.allowed_to?(:use_api, contacts.last.project)
@@ -20,9 +19,9 @@ namespace :redmine_3cx do
     credentials = "#{account.api_key}:x"
     puts(
       <<~ACC
-      curl --request GET \\
-        --url 'http://localhost:3000/3cx/contacts.json?phone=#{URI.encode_uri_component(contacts.first.phones.first)}' \\
-        --header 'authorization: Basic #{Base64.strict_encode64(credentials)}'
+        curl --request GET \\
+          --url 'http://localhost:3000/3cx/contacts.json?phone=#{URI.encode_uri_component(contacts.first.phones.first)}' \\
+          --header 'authorization: Basic #{Base64.strict_encode64(credentials)}'
       ACC
     )
   end
@@ -62,9 +61,9 @@ namespace :redmine_3cx do
 
   def create_contacts(project)
     [
-      FactoryBot.create(:contact,first_name: "John", project:, phone: "+41 78 123 45 67"),
-      FactoryBot.create(:contact,first_name: "Zoe", project:, phone: "078 111 22 33"),
-      FactoryBot.create(:contact,first_name: "Henry", project:, phone: "+41 78 111 22 33"),
+      FactoryBot.create(:contact, first_name: "John", project:, phone: "+41 78 123 45 67"),
+      FactoryBot.create(:contact, first_name: "Zoe", project:, phone: "078 111 22 33"),
+      FactoryBot.create(:contact, first_name: "Henry", project:, phone: "+41 78 111 22 33")
     ]
   end
 end

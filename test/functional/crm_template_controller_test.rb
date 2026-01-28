@@ -33,7 +33,7 @@ class CrmTemplateControllerTest < ActionController::TestCase
   def test_not_admin
     @request.session[:user_id] = 1
     get :template, format: :xml
-    status = @response.status
+    @response.status
     assert_includes [401, 403], @response.status
   end
 end

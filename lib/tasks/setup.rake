@@ -1,9 +1,8 @@
-
 namespace :redmine_3cx do
   desc "Enable Plugin"
   task enable_plugin: :environment do
     Setting.create(name: "plugin_redmine_3cx", value: {active: true}.to_json)
-    Setting.rest_api_enabled = '1'
+    Setting.rest_api_enabled = "1"
     assert!(Setting["plugin_redmine_3cx"][:active], "Expected Plugin to be enabled")
     assert!(Setting.rest_api_enabled?, "Expected REST API to be enabled")
     puts("Success!")

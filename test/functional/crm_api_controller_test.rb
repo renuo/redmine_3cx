@@ -77,7 +77,7 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_index_company_and_person_with_same_phone_number
-    @company = create(:contact, project: @contact.project, first_name: "Example AG", last_name: nil, company: nil,  is_company: true)
+    @company = create(:contact, project: @contact.project, first_name: "Example AG", last_name: nil, company: nil, is_company: true)
     get_contact(@company.phone)
     assert_response(:success)
     assert_equal 2, JSON.parse(response.body)["contacts"].size
