@@ -3,7 +3,7 @@ FactoryBot.define do
     login { "myuser" }
     password { "password" }
     mail { "example@example.com" }
-    firstname { "Admin" }
+    firstname { "John" }
     lastname { "Knolastname" }
   end
 
@@ -12,6 +12,7 @@ FactoryBot.define do
       "my_project#{n}"
     end
     name { "Project" }
+    enabled_module_names { [:contacts] }
   end
 
   factory :contact do
