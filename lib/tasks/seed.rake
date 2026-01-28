@@ -16,11 +16,13 @@ namespace :redmine_3cx do
     assert!(account.allowed_to?(:use_api, contacts.last.project), "Expected account to have sufficient permissions")
 
     puts("Feel free to test API with sample account once server is running:")
+
+    credentials = "#{account.api_key}:x"
     puts(
       <<~ACC
       curl --request GET \\
         --url 'http://localhost:3000/3cx/contacts.json?phone=#{URI.encode_uri_component(contacts.first.phones.first)}' \\
-        --header 'authorization: Basic #{account.api_key}'
+        --header 'authorization: Basic #{Base64.strict_encode64(credentials)}'
       ACC
     )
   end
@@ -32,9 +34,9 @@ namespace :redmine_3cx do
   end
 
   def create_role
-    role = Role.find_by(name: "3cx_viewer")
+    role = Role.find_by(name: "3cx_api")
     if !role
-      role = Role.create!(name: "3cx_viewer", permissions: [:use_api])
+      role = Role.create!(name: "3cx_api", permissions: [:use_api])
     end
 
     role
