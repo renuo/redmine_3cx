@@ -22,7 +22,8 @@ namespace :redmine_3cx do
     request["authorization"] = "Basic #{Base64.encode64(credentials).chomp}"
 
     response = http.request(request)
-    puts response.read_body
+    json = JSON.parse(response.read_body)
+    puts JSON.pretty_generate(json)
   end
 end
 
