@@ -35,6 +35,30 @@ def csv_header
   ]
 end
 
+def csv_header
+  %w[FirstName LastName Company Mobile Mobile2 Home Title Business Business2 Email Other BusinessFax Department Pager]
+end
+
+def csv_row(contact)
+  number = ->(kind) { ContactSerializer.contact_number(contact, kind)}
+{
+  FirstName: contact.first_name,
+  LastName: contact.last_name,
+  Company: contact.company,
+  Mobile: number.call(:phone_mobile),
+  Mobile2: number.call(:phone_mobile2),
+  Home: number.call(:phone_home),
+  Title: nil,
+  Business: number.call(:phone_business),
+  Business2: number.call(:phone_business2),
+  Email: contact.email,
+  Other: nil,
+  BusinessFax: nil,
+  Department: nil,
+  Pager: nil,
+}.values
+end
+
 def export_contact(csv, contact)
   phones = ContactSerializer.map_phone_numbers_to_keys(contact.phones)
   if phones.values.none?(&:present?)
@@ -43,6 +67,7 @@ def export_contact(csv, contact)
   end
   puts "Adding contact #{contact.first_name} #{contact.last_name}..."
   csv << contact_row(contact, phones)
+  # csv << csv_row(contact)
 end
 
 def contact_row(contact, phones)
