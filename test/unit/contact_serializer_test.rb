@@ -42,6 +42,10 @@ class ContactSerializerTest < ActiveSupport::TestCase
       ["0791112233", "00 79 111 22 33"],
       ["0781234567", "0041 78 123 45 67"],
       ["0781234567", "00 41 78 123 45 67"],
+      ["0449998877", "++41 44-999.88.77"],
+      ["0315556677", "Tel: 031/555 66 77"],
+      ["0794445566", "79 444 55 66"],
+      ["0431112233", "431112233"]
     ].each do |expected, phone_number|
       assert_equal(expected, ContactSerializer.normalize_phone_number(phone_number))
     end
