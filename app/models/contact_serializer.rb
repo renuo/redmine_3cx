@@ -1,5 +1,5 @@
 class ContactSerializer
-  PHONE_NUMBER_KEYS = [:phone_business, :phone_business2, :phone_home, :phone_home2, :phone_mobile, :phone_mobile2, :phone_other]
+  PHONE_NUMBER_KEYS = [:phone_business, :phone_business2, :phone_home, :phone_mobile, :phone_mobile2, :phone_other]
 
   class << self
     def call(contact)
