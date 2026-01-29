@@ -22,7 +22,17 @@ class ContactSerializer
     end
 
     def normalize_phone_number(phone_number)
-      phone_number.gsub(/[^+0-9]/, "").gsub(/^[+0]41/, "").rjust(10, "0")
+      n = phone_number.to_s.gsub(/[^0-9]/, "")
+      # Strip 0041, 041, or 41 prefixes IF the number is long enough to include a country code.
+      # "n.length > 10" protects Lucerne numbers (e.g. 041 222 33 44), which are exactly 10.
+      n = n[4..] if n.start_with?("0041") && n.length > 10
+      n = n[3..] if n.start_with?("041") && n.length > 10
+      n = n[2..] if n.start_with?("41") && n.length > 10
+
+      n = n[1..] if n.start_with?("00")
+      n = "0" + n if n.length == 9
+
+      n.rjust(10, "0")
     end
   end
 end
