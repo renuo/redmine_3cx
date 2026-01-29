@@ -58,6 +58,17 @@ blocks:
             - env_var: SEMAPHORE_DATABASE_ADAPTER
               values: ["postgres", "mysql"]
 
+      epilogue:
+        always:
+          commands:
+            - cd ~/redmine/plugins/redmine_3cx
+            - mkdir -p log coverage tmp/screenshots tmp/capybara
+            - artifact push job log
+            - artifact push job tmp/screenshots
+            - artifact push job tmp/capybara
+            - zip -r coverage-$SEMAPHORE_GIT_SHA coverage/
+            - artifact push job coverage-$SEMAPHORE_GIT_SHA.zip
+
   - name: Redmine 5
     dependencies: []
     execution_time_limit:
@@ -79,3 +90,13 @@ blocks:
               values: ["5.1", "5.0"]
             - env_var: SEMAPHORE_DATABASE_ADAPTER
               values: ["postgres", "mysql"]
+      epilogue:
+        always:
+          commands:
+            - cd ~/redmine/plugins/redmine_3cx
+            - mkdir -p log coverage tmp/screenshots tmp/capybara
+            - artifact push job log
+            - artifact push job tmp/screenshots
+            - artifact push job tmp/capybara
+            - zip -r coverage-$SEMAPHORE_GIT_SHA coverage/
+            - artifact push job coverage-$SEMAPHORE_GIT_SHA.zip

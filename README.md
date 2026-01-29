@@ -68,6 +68,15 @@ bin/setup
 bin/run
 ```
 
+
+### Testing the API
+
+You can check the response of the API via `service_account` user with a task:
+
+```bash
+rake redmine_3cx:call_api phone="+41 78 111 22 33"
+```
+
 ## Copyright
 
 At Renuo, published under MIT licence 2024-2025 
