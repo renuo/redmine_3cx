@@ -6,6 +6,10 @@ class CrmApiController < ApplicationController
     render json: {contacts: @contacts.map { |c| ContactSerializer.call(c) }}
   end
 
+  def show
+    render json: {contacts: Contact.live_search(params[:query]).map { |c| ContactSerializer.call(c) }}
+  end
+
   private
 
   def check_plugin_state

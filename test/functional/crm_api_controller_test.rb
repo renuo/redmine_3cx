@@ -32,6 +32,21 @@ class CrmApiControllerTest < ActionController::TestCase
   end
 
   def test_index
+    search_contacts("John", @api_key)
+    assert_response(:success)
+    @expected_contact_response = {
+      "contacts" => [{
+        "id" => @contact.id,
+        "firstname" => "John",
+        "lastname" => "Doe",
+        "company" => "Example AG",
+        "phone_business" => "0781234567"
+      }]
+    }.to_json
+    assert_equal(@expected_contact_response, response.body)
+  end
+
+  def test_search
     get_contact(@contact.phone, @api_key)
     assert_response(:success)
     assert_equal(@expected_contact_response, response.body)
@@ -97,5 +112,11 @@ class CrmApiControllerTest < ActionController::TestCase
     headers = {"HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(api_key, "x")}
     @request.headers.merge! headers
     get(:index, params: {phone: phone}, format: :json)
+  end
+
+  def search_contacts(query, api_key = @api_key)
+    headers = {"HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(api_key, "x")}
+    @request.headers.merge! headers
+    get(:show, params: {query: query}, format: :json)
   end
 end

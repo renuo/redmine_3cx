@@ -43,5 +43,39 @@
         <Output Type="ContactUrl" Passes="0" Value="https://[Domain]/contacts/[ContactId]" />
       </Outputs>
     </Scenario>
+    <Scenario Id="SearchContacts" Type="REST" EntityId="Contacts" EntityOrder="">
+      <Request SkipIf="" Url="https://[Domain]/3cx/search.json?query=[EscapedSearchText]" MessagePasses="0" Message="" RequestContentType="" RequestEncoding="UrlEncoded" RequestType="Get" ResponseType="Json" />
+      <Rules>
+        <Rule Type="Any">contacts.id</Rule>
+      </Rules>
+      <Variables>
+        <Variable Name="ContactId" LookupValue="" Path="contacts.id"><Filter /></Variable>
+        <Variable Name="FirstName" LookupValue="" Path="contacts.firstname"><Filter /></Variable>
+        <Variable Name="LastName" LookupValue="" Path="contacts.lastname"><Filter /></Variable>
+        <Variable Name="CompanyName" LookupValue="" Path="contacts.company"><Filter /></Variable>
+        <Variable Name="PhoneBusiness" LookupValue="" Path="contacts.phone_business"><Filter /></Variable>
+        <Variable Name="PhoneBusiness2" LookupValue="" Path="contacts.phone_business2"><Filter /></Variable>
+        <Variable Name="PhoneHome" LookupValue="" Path="contacts.phone_home"><Filter /></Variable>
+        <Variable Name="PhoneHome2" LookupValue="" Path="contacts.phone_home2"><Filter /></Variable>
+        <Variable Name="PhoneMobile" LookupValue="" Path="contacts.phone_mobile"><Filter /></Variable>
+        <Variable Name="PhoneMobile2" LookupValue="" Path="contacts.phone_mobile2"><Filter /></Variable>
+        <Variable Name="PhoneOther" LookupValue="" Path="contacts.phone_other"><Filter /></Variable>
+      </Variables>
+      <Outputs AllowEmpty="false">
+        <Output Type="FirstName" Passes="0" Value="[FirstName]" />
+        <Output Type="LastName" Passes="0" Value="[LastName]" />
+        <Output Type="CompanyName" Passes="0" Value="[CompanyName]" />
+        <Output Type="PhoneBusiness" Passes="0" Value="[PhoneBusiness]" />
+        <Output Type="PhoneBusiness2" Passes="0" Value="[PhoneBusiness2]" />
+        <Output Type="PhoneHome" Passes="0" Value="[PhoneHome]" />
+        <Output Type="PhoneHome2" Passes="0" Value="[PhoneHome2]" />
+        <Output Type="PhoneMobile" Passes="0" Value="[PhoneMobile]" />
+        <Output Type="PhoneMobile2" Passes="0" Value="[PhoneMobile2]" />
+        <Output Type="PhoneOther" Passes="0" Value="[PhoneOther]" />
+        <Output Type="EntityId" Passes="0" Value="[ContactId]" />
+        <Output Type="EntityType" Passes="0" Value="Contacts" />
+        <Output Type="ContactUrl" Passes="0" Value="https://[Domain]/contacts/[ContactId]" />
+      </Outputs>
+    </Scenario>
   </Scenarios>
 </Crm>
