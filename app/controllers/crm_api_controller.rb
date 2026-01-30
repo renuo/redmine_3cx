@@ -1,16 +1,29 @@
 class CrmApiController < ApplicationController
-  before_action :authorize_global, :check_plugin_state, :find_contacts, only: [:index]
-  accept_api_auth :index
+  before_action :authorize_global, :check_plugin_state
+  before_action :find_contacts_by_phone, only: [:lookup]
+  before_action :find_contacts_by_query, only: [:search]
 
-  def index
-    render json: {contacts: @contacts.map { |c| ContactSerializer.call(c) }}
+  rescue_from ActionController::ParameterMissing, with: :render_missing_param
+
+  accept_api_auth :lookup, :search
+
+  def lookup
+    render_contacts
   end
 
-  def show
-    render json: {contacts: Contact.live_search(params[:query]).map { |c| ContactSerializer.call(c) }}
+  def search
+    render_contacts
   end
 
   private
+
+  def render_contacts
+    render json: {contacts: @contacts.map { |c| ContactSerializer.call(c) }}
+  end
+
+  def render_missing_param(exception)
+    render json: {error: exception.message}, status: :bad_request
+  end
 
   def check_plugin_state
     unless Setting[:plugin_redmine_3cx][:active]
@@ -22,7 +35,17 @@ class CrmApiController < ApplicationController
     params.require(:phone)
   end
 
-  def find_contacts
+  def query_params
+    params.require(:query)
+  end
+
+  def find_contacts_by_query
+    @contacts = Contact.joins(:projects).live_search(query_params).order(:is_company).filter do |contact|
+      User.current.allowed_to?(:use_api, contact.project)
+    end
+  end
+
+  def find_contacts_by_phone
     phone_number = ContactSerializer.normalize_phone_number(phone_params)
 
     @contacts = Contact.joins(:projects).order(:is_company).filter do |contact|

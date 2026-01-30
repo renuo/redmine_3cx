@@ -1,26 +1,35 @@
-# redmine_3cx
+# Redmine Contacts CRM 3CX Integration Guide
 
-This Redmine CRM 3CX integration plugin offers a configuration template along with a Basic Auth-protected HTTP endpoint for seamless integration with the Redmine Conctacts CRM system.
+This Redmine plugin integrates the Redmine Contacts CRM system with 3CX, providing a configuration template and Basic Auth-protected HTTP endpoints for seamless contact lookup and search functionality.
+
+## Supported Scenarios
+
+### Scenario 1: Incoming Call Contact Lookup
+**Endpoint:** `https://[RedmineDomain]/3cx/lookup.json?phone=[Number]`
+
+When an incoming call is received in 3CX, the system queries the CRM API using the caller's phone number. If a matching contact exists in the Redmine Contacts database, that contact is automatically displayed in the 3CX phonebook.
+
+### Scenario 2: Contact Search
+**Endpoint:** `https://[RedmineDomain]/3cx/search.json?query=[Query]`
+
+When a user searches for a contact within 3CX, the CRM API is queried using free text search. The search matches against first name, last name, company name, phone numbers, and email addresses, returning all matching contacts from the Redmine Contacts database.
 
 ## Accessing Contacts API
 
-To access the contacts API in the Redmine CRM plugin, the current user must have the `:use_api` permission. This permission can be found under the Project permissions. It is important to note that the user account must have the `use_api` permission for the project that the contacts are part of, otherwise the project contacts will be skipped.
+To access the contacts API through the Redmine CRM plugin, the current user must have the `:use_api` permission, which can be configured under Project permissions. The user account must have this permission for the specific project containing the contacts; otherwise, those contacts will be skipped in results.
 
-When multiple contacts share the same phone number, the API will prioritize individual contacts over company contacts in the results. This means that if both a person and a company have the same phone number, the person's contact details will appear first in the response.
+**Contact Priority:** When multiple contacts share the same phone number, individual contacts are prioritized over company contacts in the results.
 
-## Production Environment
+## Production Environment Setup
 
 ### Preconditions
+* Redmine is installed
+* Redmine Contacts plugin is installed
+* You have admin privileges on the Redmine server
 
-* Make sure that [Redmine](https://github.com/redmine/redmine) is installed.
-* Make sure that [Redmine Contacts](https://www.redmineup.com/pages/plugins/crm) is installed.
-* Make sure that you have admin privileges on the Redmine Server.
+### Installation Steps
 
-### Setup
-
-
-1. Enter the following commands in your terminal:
-
+1. Clone the plugin into your Redmine installation:
 ```bash
 cd /path/to/redmine
 git clone https://github.com/renuo/redmine_3cx plugins/redmine_3cx
@@ -29,37 +38,64 @@ bin/production_setup
 bundle exec rails s -e production
 ```
 
-2. Login with your admin account.
-3. Make sure that API authentication is enabled (Settings / API).
+2. Enable the plugin and API. Choose one of the following approaches:
 
-Accessing API Key
-* (Not very safe) Use the API Key of the administrator account (Navbar: My account/API access key/Show).
-* (Safer) Use the API Key of the service account (login: 3cx_service_account, password: password) and assign it to the relevant projects.
+   **Option A: Automated Setup (Recommended)**
+   ```bash
+   rails redmine_3cx:enable_plugin
+   ```
+   This command will:
+   * Enable the 3CX plugin
+   * Enable the Redmine REST API
+   * Verify both settings are correctly configured
 
-HTTPs
+   **Option B: Manual Setup**
+   * Log in to Redmine with your admin account
+   * Enable API authentication in Redmine settings (Settings > API)
+   * Enable the 3CX plugin through the Plugins interface (Administration > Plugins)
 
-* The default CRM template enforces HTTPs connection because the API key is leaked otherwise but you can change the template manually if you want to live dangerously.
+3. Verify the setup was successful by checking that both the plugin and REST API are enabled in Redmine settings.
 
-3CX Integration
+### Service Account Setup
 
-1. `3CX Cloud Sidebar: Advanced/Contacts/Options/Match Caller ID`: select "Match exactly"
-1. `3CX Cloud Sidebar: Setings/Options/General Options`: uncheck "Hide CRM Contacts from 3CX Apps Company phonebook"
-1. `3CX Cloud Sidebar: Settings/CRM`: 
-    * Upload CRM configuration
-    * Fill in API Key (e.g. 2f5a9d4b1c7e8f3a6d2b0c9a1f8a3e1b4c7e5d9a)
-    * Fill in Domain (e.g. redmine.example.com).
-1. Click `Test` and enter a phone number in your CRM.
-1. Click `OK` to add the integration.
-1. Restart all 3CX Services from Dashboard / Services
-1. Enjoy the integration!
+Run the setup task to create a dedicated service account for API access:
+
+```bash
+rake redmine_3cx:setup_service_account
+```
+
+This command will:
+* Create a role `3cx_api` with the `:use_api` permission
+* Create a user `3cx_service_account` with API access
+* Add the service account to all projects with the contacts module enabled
+* Output the API key to use in 3CX configuration
+
+**Alternative:** Use the administrator account's API key (Navbar > My account > API access key > Show), though a dedicated service account is recommended.
+
+**HTTPS Requirement:** The default CRM template enforces HTTPS to prevent API key exposure. Manual configuration is required if you want to use HTTP.
+
+### 3CX Configuration
+
+1. In 3CX Cloud Sidebar, navigate to Advanced > Contacts > Options > Match Caller ID and select "Match exactly"
+2. In 3CX Cloud Sidebar, go to Settings > Options > General Options and uncheck "Hide CRM Contacts from 3CX Apps Company phonebook"
+3. In 3CX Cloud Sidebar, go to Settings > CRM:
+   * Upload the CRM configuration template
+   * Enter your API Key (example: `2f5a9d4b1c7e8f3a6d2b0c9a1f8a3e1b4c7e5d9a`)
+   * Enter your Domain (example: `redmine.example.com`)
+4. Click Test and enter a phone number that exists in your CRM to verify the connection
+5. Click OK to complete the integration setup
+6. Restart all 3CX Services from the Dashboard > Services
+7. The integration is now active
 
 ## Development Environment
+
+### Setup
 
 ```bash
 git clone -b 5.1-stable https://github.com/redmine/redmine
 ```
 
-Install the Redmine Contacts Plugin via https://www.redmine.org/plugins/redmine_contacts
+Install the Redmine Contacts plugin using the plugin repository at https://www.redmine.org/plugins/redmine_contacts
 
 ```bash
 git clone https://github.com/renuo/redmine_3cx redmine/plugins/redmine_3cx
@@ -68,15 +104,20 @@ bin/setup
 bin/run
 ```
 
+### Manual Testing of APIs
 
-### Testing the API
-
-You can check the response of the API via `service_account` user with a task:
-
+Test the phone lookup scenario:
 ```bash
-rake redmine_3cx:call_api phone="+41 78 111 22 33"
+rake redmine_3cx:phone_lookup phone="+41 79 123 45 67"
+rake redmine_3cx:phone_lookup phone="+41 79 123 45 67" login="admin"
+```
+
+Test the search scenario:
+```bash
+rake redmine_3cx:contact_search query="John"
+rake redmine_3cx:contact_search query="John" login="admin" host="myapp.example.com"
 ```
 
 ## Copyright
 
-At Renuo, published under MIT licence 2024-2025 
+Published by Renuo under MIT License
