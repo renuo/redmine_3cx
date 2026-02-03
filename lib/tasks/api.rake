@@ -4,7 +4,7 @@ namespace :redmine_3cx do
 
     Example:
       rake redmine_3cx:phone_lookup phone="+41 78 111 22 33"
-      rake redmine_3cx:phone_lookup phone="+41 78 111 22 33" login="admin" host="myapp.example.com"
+      rake redmine_3cx:phone_lookup phone="+41 78 111 22 33" login="your_service_account" host="myapp.example.com"
   DESC
 
   task phone_lookup: :environment do
@@ -17,7 +17,7 @@ namespace :redmine_3cx do
 
     Example:
       rake redmine_3cx:contact_search query="John"
-      rake redmine_3cx:contact_search query="John" login="admin" host="myapp.example.com"
+      rake redmine_3cx:contact_search query="John" login="your_service_account" host="myapp.example.com"
   DESC
 
   task contact_search: :environment do

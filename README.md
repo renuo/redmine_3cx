@@ -7,7 +7,7 @@ This Redmine plugin integrates the Redmine Contacts CRM system with 3CX, providi
 ### Scenario 1: Incoming Call Contact Lookup
 **Endpoint:** `https://[RedmineDomain]/3cx/lookup.json?phone=[Number]`
 
-When an incoming call is received in 3CX, the system queries the CRM API using the caller's phone number. If a matching contact exists in the Redmine Contacts database, that contact is automatically displayed in the 3CX phonebook.
+When an incoming call is received in 3CX, the system queries the CRM API using the caller's phone number. If a matching contact exists in the Redmine Contacts database, that contact is automatically shown on the receiver's phone and saved in the 3CX phonebook labelled as CRM.
 
 ### Scenario 2: Contact Search
 **Endpoint:** `https://[RedmineDomain]/3cx/search.json?query=[Query]`
