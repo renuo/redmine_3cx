@@ -6,9 +6,9 @@ namespace :redmine_3cx do
     require File.expand_path(File.dirname(__FILE__) + "/../../test/factories")
     require File.expand_path(File.dirname(__FILE__) + "/../../init.rb")
 
-    User.where(login: "service_account").destroy_all
+    User.where(login: "3cx_service_account").destroy_all
     Project.where(name: "Project").destroy_all
-    
+
     role = Role.find_or_create_by!(name: "3cx_api") { |r| r.permissions = [:use_api] }
     puts "Created Role: #{role.name}"
 

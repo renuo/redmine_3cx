@@ -9,16 +9,16 @@ class CrmApiControllerTest < ActionController::TestCase
   def setup
     Setting.rest_api_enabled = "1"
     Setting.plugin_redmine_3cx = {active: true}
-    project = create(:project)
-    project.enable_module! :contacts
+    @project = create(:project)
+    @project.enable_module! :contacts
 
     @user = create(:user)
-    @user.memberships.create(project: project)
+    @user.memberships.create(project: @project)
     @user.memberships.last.roles << Role.find_or_create_by(name: "3CX API User", permissions: [:use_api])
     @user.memberships.last.save!
     @api_key = @user.api_key
 
-    @contact = create(:contact, project: project)
+    @contact = create(:contact, project: @project)
 
     @expected_contact_response = {
       "contacts" => [{
@@ -31,42 +31,39 @@ class CrmApiControllerTest < ActionController::TestCase
     }.to_json
   end
 
-  def test_index
-    get_contact(@contact.phone, @api_key)
+  # Index (phone lookup) tests
+
+  def test_lookup_by_phone
+    get_contact(@contact.phone)
     assert_response(:success)
     assert_equal(@expected_contact_response, response.body)
   end
 
-  def test_index_inactive
+  def test_lookup_inactive_plugin
     Setting[:plugin_redmine_3cx] = {active: false}
-    get_contact(@contact.phone, @api_key)
+    get_contact(@contact.phone)
     assert_response(:forbidden)
     assert_equal({error: "Plugin not active"}.to_json, response.body)
   end
 
-  def test_index_alternate_phone_format
+  def test_lookup_alternate_phone_format
     get_contact("+41 (0) 78 123 45 67 ")
     assert_response(:success)
     assert_equal(@expected_contact_response, response.body)
   end
 
-  def test_index_not_found
+  def test_lookup_not_found
     get_contact("Nonexistent")
     assert_response(:success)
     assert_equal({contacts: []}.to_json, response.body)
   end
 
-  def test_performance
-    create_list(:contact, 100, phone: "other")
-    assert_benchmark("CrmApiController#index", percentile: 95, max_time_ms: 100, runs: 200) { get_contact_assert_success }
-  end
-
-  def test_index_invalid_credentials
+  def test_lookup_invalid_credentials
     get_contact(@contact.phone, "Invalid")
     assert_response(:unauthorized)
   end
 
-  def test_index_user_non_member
+  def test_lookup_user_non_member
     other_project = create(:project)
     other_project.enable_module! :contacts
     other_contact = create(:contact, phone: "0123456789", project: other_project)
@@ -76,26 +73,100 @@ class CrmApiControllerTest < ActionController::TestCase
     assert_equal({contacts: []}.to_json, response.body)
   end
 
-  def test_index_company_and_person_with_same_phone_number
+  def test_lookup_company_and_person_with_same_phone_number
     @company = create(:contact, project: @contact.project, first_name: "Example AG", last_name: nil, company: nil, is_company: true)
     get_contact(@company.phone)
     assert_response(:success)
-    assert_equal 2, JSON.parse(response.body)["contacts"].size
-    assert_equal @contact.id, JSON.parse(response.body)["contacts"][0]["id"]
-    assert_equal @company.id, JSON.parse(response.body)["contacts"][1]["id"]
+    contacts = JSON.parse(response.body)["contacts"]
+    assert_equal 2, contacts.size
+    assert_equal @contact.id, contacts[0]["id"]
+    assert_equal @company.id, contacts[1]["id"]
   end
 
-  private
+  def test_lookup_missing_phone_param
+    make_request(:lookup, {})
+    assert_response(:bad_request)
+  end
 
-  def get_contact_assert_success
-    get_contact(@contact.phone)
+  def test_performance
+    create_list(:contact, 100, phone: "other")
+    assert_benchmark("CrmApiController#lookup", percentile: 95, max_time_ms: 100, runs: 200) do
+      get_contact(@contact.phone)
+      assert_response(:success)
+      assert_equal(@expected_contact_response, response.body)
+    end
+  end
+
+  # Search tests
+
+  def test_search_by_query
+    search_contacts("John")
     assert_response(:success)
     assert_equal(@expected_contact_response, response.body)
   end
 
+  def test_search_by_lastname
+    search_contacts("Doe")
+    assert_response(:success)
+    assert_equal(@expected_contact_response, response.body)
+  end
+
+  def test_search_not_found
+    search_contacts("Nonexistent")
+    assert_response(:success)
+    assert_equal({contacts: []}.to_json, response.body)
+  end
+
+  def test_search_inactive_plugin
+    Setting[:plugin_redmine_3cx] = {active: false}
+    search_contacts("John")
+    assert_response(:forbidden)
+    assert_equal({error: "Plugin not active"}.to_json, response.body)
+  end
+
+  def test_search_invalid_credentials
+    search_contacts("John", "Invalid")
+    assert_response(:unauthorized)
+  end
+
+  def test_search_user_non_member
+    other_project = create(:project)
+    other_project.enable_module! :contacts
+    create(:contact, first_name: "Jane", project: other_project)
+
+    search_contacts("Jane")
+    assert_response(:success)
+    assert_equal({contacts: []}.to_json, response.body)
+  end
+
+  def test_search_missing_query_param
+    make_request(:search, {})
+    assert_response(:bad_request)
+  end
+
+  def test_search_company_and_person_ordering
+    @company = create(:contact, project: @project, first_name: "John Corp", last_name: nil, company: nil, is_company: true)
+    search_contacts("John")
+    assert_response(:success)
+    contacts = JSON.parse(response.body)["contacts"]
+    assert_equal 2, contacts.size
+    assert_equal @contact.id, contacts[0]["id"]
+    assert_equal @company.id, contacts[1]["id"]
+  end
+
+  private
+
   def get_contact(phone, api_key = @api_key)
+    make_request(:lookup, {phone: phone}, api_key)
+  end
+
+  def search_contacts(query, api_key = @api_key)
+    make_request(:search, {query: query}, api_key)
+  end
+
+  def make_request(action, params, api_key = @api_key)
     headers = {"HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(api_key, "x")}
     @request.headers.merge! headers
-    get(:index, params: {phone: phone}, format: :json)
+    get(action, params: params, format: :json)
   end
 end
