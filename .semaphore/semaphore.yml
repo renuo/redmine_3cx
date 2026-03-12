@@ -8,6 +8,7 @@ agent:
 global_job_config:
   secrets:
     - name: redmine_3cx
+    - name: bundle-github
   env_vars:
     - name: RAILS_ENV
       value: test

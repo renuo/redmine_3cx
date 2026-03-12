@@ -2,14 +2,15 @@
 
 set -euo pipefail
 
+GITHUB_TOKEN="${BUNDLE_GITHUB__COM%%:*}"
 cd ~/redmine/plugins
-git clone --depth 1 --branch develop --single-branch --no-checkout https://github.com/renuo/renuo-redmine.git renuo-redmine-tmp
-cd renuo-redmine-tmp
-git sparse-checkout set plugins/redmine_contacts
-git checkout
-cp -r plugins/redmine_contacts ~/redmine/plugins/redmine_contacts
-cd ~/redmine/plugins
-rm -rf renuo-redmine-tmp
+curl -L -H "Authorization: token $GITHUB_TOKEN" \
+  https://api.github.com/repos/renuo/renuo-redmine/tarball/develop \
+  -o renuo-redmine.tar.gz
+mkdir -p renuo-redmine-tmp
+tar -xzf renuo-redmine.tar.gz -C renuo-redmine-tmp --strip-components=1
+cp -r renuo-redmine-tmp/plugins/redmine_contacts ~/redmine/plugins/redmine_contacts
+rm -rf renuo-redmine-tmp renuo-redmine.tar.gz
 cd ~/redmine/plugins/redmine_contacts
 sed -i '1s/^/source "https:\/\/rubygems.org"\n/' Gemfile
 bundle install --path ~/vendor/redmine-bundle --without development test
