@@ -37,6 +37,42 @@ blocks:
             - checkout --use-cache
             - bin/fastcheck
 
+  - name: Redmine master
+    dependencies: []
+    execution_time_limit:
+      minutes: 5
+    task:
+      env_vars:
+        - name: RUBY_VERSION
+          value: "3.3.4"
+      jobs:
+        - name: checks
+          commands:
+            - sem-version ruby $RUBY_VERSION -f
+            - sem-service start $SEMAPHORE_DATABASE_ADAPTER
+            - checkout --use-cache
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine_contacts
+            - ~/redmine_3cx/.semaphore/bin/setup_redmine_3cx
+            - cd ~/redmine/plugins/redmine_3cx
+            - CI=true bundle exec rake redmine_3cx:check
+          matrix:
+            - env_var: REDMINE_VERSION
+              values: ["master"]
+            - env_var: SEMAPHORE_DATABASE_ADAPTER
+              values: ["postgres", "mysql"]
+
+      epilogue:
+        always:
+          commands:
+            - cd ~/redmine/plugins/redmine_3cx
+            - mkdir -p log coverage tmp/screenshots tmp/capybara
+            - artifact push job log
+            - artifact push job tmp/screenshots
+            - artifact push job tmp/capybara
+            - zip -r coverage-$SEMAPHORE_GIT_SHA coverage/
+            - artifact push job coverage-$SEMAPHORE_GIT_SHA.zip
+
   - name: Redmine 6
     dependencies: []
     execution_time_limit:
