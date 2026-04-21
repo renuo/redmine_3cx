@@ -92,7 +92,7 @@ This command will:
 ### Setup
 
 ```bash
-git clone -b 5.1-stable https://github.com/redmine/redmine
+git clone -b 6.1-stable https://github.com/redmine/redmine
 ```
 
 Install the Redmine Contacts plugin using the plugin repository at https://www.redmine.org/plugins/redmine_contacts
