@@ -8,6 +8,7 @@ git clone --depth 1 --branch main \
   ~/redmine/plugins/redmine_contacts
 cd ~/redmine/plugins/redmine_contacts
 sed -i '1s/^/source "https:\/\/rubygems.org"\n/' Gemfile
+sed -i "s/^gem 'redmineup'$/gem 'redmineup', '1.1.3'/" Gemfile
 bundle install --path ~/vendor/redmine-bundle --without development test
 cd ~/redmine/
 bundle exec rake redmine:plugins NAME=redmine_contacts
