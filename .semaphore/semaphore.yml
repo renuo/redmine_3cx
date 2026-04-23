@@ -17,7 +17,7 @@ global_job_config:
     - name: DATABSE_ADAPTER
       value: "postgresql"
     - name: REDMINE_VERSION
-      value: "5.1"
+      value: "6.1"
     - name: RUBY_VERSION
       value: "3.1.4"
 
@@ -78,6 +78,9 @@ blocks:
     execution_time_limit:
       minutes: 5
     task:
+      env_vars:
+        - name: RUBY_VERSION
+          value: "3.3.4"
       jobs:
         - name: checks
           commands:
@@ -91,7 +94,7 @@ blocks:
             - CI=true bundle exec rake redmine_3cx:check
           matrix:
             - env_var: REDMINE_VERSION
-              values: ["6.0"]
+              values: ["6.1", "6.0"]
             - env_var: SEMAPHORE_DATABASE_ADAPTER
               values: ["postgres", "mysql"]
 
